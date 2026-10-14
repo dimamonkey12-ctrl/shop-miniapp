@@ -366,7 +366,6 @@
 
   <script>
     const BUY_URL = "https://t.me/desiresceo";
-    const PIN = "destore";
     const STORAGE_KEY = "destore-services-v2";
 
     const tg = window.Telegram?.WebApp;
@@ -409,7 +408,7 @@
     let state = loadState();
     let mode = "catalog"; // catalog | admin
     let path = { catId: null, productId: null };
-    let unlocked = sessionStorage.getItem("destore-unlocked") === "1";
+    let unlocked = true;
     let toast = "";
 
     function loadState() {
@@ -579,18 +578,9 @@
           <div>
             <div class="brand-kicker">admin</div>
             <h3 style="margin-top:4px">Управление Destore</h3>
-            <p class="hint" style="margin-top:8px">Код доступа: <b style="color:var(--gold)">destore</b>. Фото сжимаются в миниатюры со скруглёнными углами.</p>
+            <p class="hint" style="margin-top:8px">Добавляй категории и услуги с фото. Миниатюры со скруглёнными углами.</p>
           </div>
           ${toast ? `<div class="msg">${escapeHtml(toast)}</div>` : ""}
-          ${
-            !unlocked
-              ? `
-                <form id="pinForm" class="form-grid">
-                  <input class="field" name="pin" placeholder="Код витрины" autocomplete="off" />
-                  <button class="primary" type="submit">Войти</button>
-                </form>
-              `
-              : `
                 <div class="admin-block">
                   <form id="catForm" class="form-grid">
                     <h3>Новая категория</h3>
@@ -655,8 +645,6 @@
                     <button class="ghost" id="resetBtn" type="button">Сбросить демо</button>
                   </div>
                 </div>
-              `
-          }
         </div>
       `;
     }
@@ -670,21 +658,6 @@
     }
 
     function bindAdmin() {
-      const pinForm = document.getElementById("pinForm");
-      if (pinForm) {
-        pinForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const pin = new FormData(pinForm).get("pin");
-          if (String(pin) === PIN) {
-            unlocked = true;
-            sessionStorage.setItem("destore-unlocked", "1");
-            setToast("Доступ открыт");
-          } else {
-            setToast("Неверный код");
-          }
-        });
-      }
-
       const catForm = document.getElementById("catForm");
       if (catForm) {
         let catPhoto = null;
