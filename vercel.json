@@ -1,0 +1,8 @@
+
+{
+  "functions": {
+    "api/check-subscription.js": {
+      "maxDuration": 10
+    }
+  }
+}
