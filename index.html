@@ -1,420 +1,810 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Каталог</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Destore</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+    :root {
+      --bg: #0a0908;
+      --ink: #f6efe4;
+      --muted: #a89886;
+      --line: rgba(230, 177, 90, 0.18);
+      --gold: #e6b15a;
+      --gold-2: #f0d08a;
+      --ember: #ff6a45;
+      --card: rgba(22, 18, 14, 0.72);
+      --ok: #3dd6c6;
+      --danger: #ff7b8a;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      min-height: 100%;
+      font-family: "Manrope", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
-      background: #07070f;
-      color: #fff;
-      min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Мощный анимированный фон */
-    .bg {
+    /* Dynamic premium background */
+    .fx {
       position: fixed;
       inset: 0;
       z-index: -2;
-      background: 
-        radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.35) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(6, 182, 212, 0.25) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 60%),
-        #07070f;
-      animation: bgPulse 12s ease-in-out infinite alternate;
+      overflow: hidden;
+      background: #0a0908;
     }
 
-    @keyframes bgPulse {
-      0% { filter: hue-rotate(0deg) brightness(1); }
-      100% { filter: hue-rotate(25deg) brightness(1.1); }
+    .fx-mesh {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(230, 177, 90, 0.22), transparent 32%),
+        radial-gradient(circle at 85% 15%, rgba(255, 106, 69, 0.16), transparent 28%),
+        radial-gradient(circle at 50% 85%, rgba(61, 214, 198, 0.08), transparent 34%),
+        radial-gradient(circle at 70% 45%, rgba(230, 177, 90, 0.08), transparent 25%);
+      animation: mesh 18s ease-in-out infinite alternate;
+      filter: saturate(1.1);
     }
 
-    .bg-blur {
-      position: fixed;
+    .fx-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.55;
+      animation: float 12s ease-in-out infinite;
+    }
+    .fx-orb.a { width: 280px; height: 280px; left: -60px; top: 12%; background: #e6b15a; animation-delay: 0s; }
+    .fx-orb.b { width: 220px; height: 220px; right: -40px; top: 38%; background: #ff6a45; animation-delay: -4s; }
+    .fx-orb.c { width: 180px; height: 180px; left: 30%; bottom: 8%; background: #3dd6c6; opacity: 0.25; animation-delay: -7s; }
+
+    .fx-grid {
+      position: absolute;
       inset: 0;
-      z-index: -1;
-      backdrop-filter: blur(60px);
+      background-image:
+        linear-gradient(rgba(246, 239, 228, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(246, 239, 228, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 78%);
+      animation: gridShift 30s linear infinite;
     }
 
-    .container {
-      max-width: 460px;
+    .fx-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.07;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    @keyframes mesh {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-3%, 2%, 0) scale(1.08); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(18px, -22px, 0); }
+    }
+    @keyframes gridShift {
+      from { background-position: 0 0; }
+      to { background-position: 48px 48px; }
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .app {
+      width: min(100%, 440px);
       margin: 0 auto;
-      padding: 20px 16px 50px;
+      padding: 18px 16px 48px;
+      animation: rise 0.45s ease both;
     }
 
     header {
       display: flex;
+      align-items: flex-end;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 28px;
+      gap: 12px;
+      margin-bottom: 22px;
     }
 
-    .logo {
-      font-size: 26px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #c084fc, #22d3ee, #f472b6);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: logoShine 6s ease infinite;
-    }
-
-    @keyframes logoShine {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    .admin-badge {
-      background: linear-gradient(135deg, rgba(192, 132, 252, 0.25), rgba(34, 211, 238, 0.15));
-      border: 1px solid rgba(192, 132, 252, 0.5);
-      color: #e9d5ff;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 5px 12px;
-      border-radius: 20px;
-      display: none;
-      box-shadow: 0 0 15px rgba(192, 132, 252, 0.3);
-    }
-
-    .section-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #94a3b8;
+    .brand-kicker {
+      font-size: 11px;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 14px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 12px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card:active {
-      transform: scale(0.975);
-    }
-
-    .card:hover {
-      border-color: rgba(192, 132, 252, 0.4);
-      background: rgba(255, 255, 255, 0.07);
-      box-shadow: 0 8px 30px rgba(139, 92, 246, 0.15);
-    }
-
-    .card-title {
-      font-size: 17px;
+      color: var(--gold);
       font-weight: 600;
       margin-bottom: 6px;
     }
 
-    .card-price {
-      font-size: 15px;
-      font-weight: 600;
-      color: #2dd4bf;
+    .brand-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 42px;
+      line-height: 0.9;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(120deg, #fff6e8 10%, var(--gold) 45%, var(--ember) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
-    .card-status {
-      display: inline-block;
+    .brand-sub {
       margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .icon-btn, .ghost, .primary, .danger {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .icon-btn, .ghost {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+    }
+
+    .primary {
+      width: 100%;
+      border-radius: 999px;
+      padding: 15px 18px;
+      font-weight: 700;
+      color: #1a1208;
+      background: linear-gradient(120deg, var(--gold), #f3d39a 42%, var(--ember));
+      box-shadow: 0 12px 30px rgba(255, 106, 69, 0.22);
+    }
+
+    .danger {
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(255, 123, 138, 0.12);
+      color: var(--danger);
+      border: 1px solid rgba(255, 123, 138, 0.25);
       font-size: 12px;
       font-weight: 600;
-      color: #fb7185;
-      background: rgba(251, 113, 133, 0.15);
-      padding: 3px 10px;
-      border-radius: 20px;
     }
 
-    .btn {
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .list { display: grid; gap: 10px; }
+
+    .card {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
+      gap: 12px;
       width: 100%;
-      padding: 16px;
+      text-align: left;
+      padding: 12px;
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      color: inherit;
+      transition: transform 0.18s ease, border-color 0.18s ease;
+    }
+    .card:active { transform: scale(0.985); }
+    .card:hover { border-color: rgba(230, 177, 90, 0.42); }
+
+    .thumb, .thumb-ph {
+      width: 52px;
+      height: 52px;
       border-radius: 16px;
-      font-weight: 700;
+      flex: none;
+      object-fit: cover;
+    }
+    .thumb {
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.28);
+    }
+    .thumb.lg { width: 84px; height: 84px; border-radius: 22px; }
+    .thumb-ph {
+      display: grid;
+      place-items: center;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 22px;
+      color: var(--gold);
+      background:
+        linear-gradient(145deg, rgba(230,177,90,0.25), rgba(255,106,69,0.08) 45%, rgba(22,18,14,0.9));
+      border: 1px solid rgba(230,177,90,0.28);
+    }
+    .thumb-ph.lg { width: 84px; height: 84px; border-radius: 22px; font-size: 34px; }
+
+    .card-title {
       font-size: 16px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      position: relative;
-      overflow: hidden;
+      font-weight: 600;
+      line-height: 1.25;
     }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 50%, #22d3ee 100%);
-      background-size: 200% 200%;
-      color: white;
-      box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
-      animation: btnGlow 4s ease infinite;
+    .card-meta {
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--muted);
     }
-
-    @keyframes btnGlow {
-      0%, 100% { background-position: 0% 50%; box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5); }
-      50% { background-position: 100% 50%; box-shadow: 0 6px 30px rgba(217, 70, 239, 0.55); }
+    .price {
+      color: var(--gold);
+      font-weight: 600;
     }
-
-    .btn-primary:active {
-      transform: scale(0.96);
-    }
-
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -60%;
-      width: 40%;
-      height: 200%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
-      transform: skewX(-20deg);
-      animation: shine 3.5s infinite;
-    }
-
-    @keyframes shine {
-      0% { left: -60%; }
-      20% { left: 120%; }
-      100% { left: 120%; }
-    }
-
-    .btn-back {
-      background: rgba(255,255,255,0.06);
-      color: #cbd5e1;
-      margin-bottom: 18px;
-      font-weight: 500;
-      font-size: 15px;
-    }
-
-    .product-detail {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .product-detail.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .product-name {
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-
-    .product-price {
-      font-size: 20px;
+    .badge {
+      display: inline-flex;
+      margin-top: 6px;
+      font-size: 11px;
       font-weight: 700;
-      color: #2dd4bf;
-      margin-bottom: 16px;
+      color: var(--danger);
+      border: 1px solid rgba(255,123,138,0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
     }
 
-    .product-desc {
-      color: #94a3b8;
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 28px;
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(18, 15, 12, 0.78);
+      border-radius: 24px;
+      padding: 16px;
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .field, .area, .select {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--ink);
+      padding: 12px 14px;
+      font: inherit;
+      outline: none;
+    }
+    .area { resize: vertical; min-height: 88px; }
+    .field:focus, .area:focus, .select:focus {
+      border-color: rgba(230,177,90,0.55);
+    }
+
+    .form-grid { display: grid; gap: 10px; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .hint { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .msg { color: var(--gold); font-size: 13px; }
+    .err { color: var(--danger); font-size: 13px; }
+    .stack { display: grid; gap: 14px; }
+    .spacer { height: 10px; }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .detail-head {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 14px;
     }
 
     .empty {
       text-align: center;
-      color: #64748b;
-      padding: 50px 20px;
-      font-size: 15px;
+      color: var(--muted);
+      padding: 36px 12px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
     }
 
-    .hidden {
-      display: none !important;
+    .admin-block { display: grid; gap: 16px; }
+    .admin-block h3 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .file-line {
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .mini-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fx-mesh, .fx-orb, .fx-grid, .app { animation: none; }
     }
   </style>
 </head>
 <body>
-  <div class="bg"></div>
-  <div class="bg-blur"></div>
+  <div class="fx" aria-hidden="true">
+    <div class="fx-mesh"></div>
+    <div class="fx-orb a"></div>
+    <div class="fx-orb b"></div>
+    <div class="fx-orb c"></div>
+    <div class="fx-grid"></div>
+    <div class="fx-noise"></div>
+  </div>
 
-  <div class="container">
+  <div class="app">
     <header>
-      <div class="logo">Каталог</div>
-      <div class="admin-badge" id="adminBadge">Админ</div>
+      <div>
+        <div class="brand-kicker">premium services</div>
+        <div class="brand-title">Destore</div>
+        <div class="brand-sub">Магазин услуг · private catalog</div>
+      </div>
+      <button class="icon-btn" id="toggleAdmin" type="button">Управление</button>
     </header>
 
-    <div id="categoriesView">
-      <div class="section-title">Категории</div>
-      <div id="categoriesList"></div>
-      <div class="empty hidden" id="emptyCategories">Категорий пока нет</div>
-    </div>
-
-    <div id="productsView" class="hidden">
-      <button class="btn btn-back" onclick="showCategories()">← Назад к категориям</button>
-      <div class="section-title" id="categoryTitle">Товары</div>
-      <div id="productsList"></div>
-    </div>
-
-    <div id="productDetail" class="product-detail">
-      <button class="btn btn-back" onclick="showProducts()">← Назад</button>
-      <div class="product-name" id="detailName"></div>
-      <div class="product-price" id="detailPrice"></div>
-      <div class="product-desc" id="detailDesc"></div>
-      <div id="detailStatus"></div>
-      <br><br>
-      <button class="btn btn-primary" onclick="buyProduct()">🛒 Купить</button>
-    </div>
+    <div id="view"></div>
   </div>
 
   <script>
-    const ADMINS = [7535464331, 8404412552];
-    let data = { categories: {} };
-    let currentCategoryId = null;
+    const BUY_URL = "https://t.me/desiresceo";
+    const PIN = "destore";
+    const STORAGE_KEY = "destore-services-v2";
 
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-    tg.setHeaderColor('#07070f');
-    tg.setBackgroundColor('#07070f');
-
-    const user = tg.initDataUnsafe?.user;
-    if (user && ADMINS.includes(user.id)) {
-      document.getElementById('adminBadge').style.display = 'inline-block';
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+      try {
+        tg.setHeaderColor("#0a0908");
+        tg.setBackgroundColor("#0a0908");
+      } catch (_) {}
     }
 
-    function loadData() {
-      data = {
-        categories: {
-          "1": {
-            name: "Иммортали",
-            products: {
-              "1": {
-                name: "I always wanted to die",
-                description: "Голова Phantom Lancer\nImmortal\nМожно обменять и продать",
-                price_usd: 28,
-                price_rub: 2500,
-                out_of_stock: false
-              },
-              "2": {
-                name: "Пример Immortal 2",
-                description: "Красивый предмет для героя",
-                price_usd: 45,
-                price_rub: 4100,
-                out_of_stock: true
-              }
+    const seed = {
+      categories: [
+        {
+          id: "c1",
+          name: "Личные услуги",
+          photo: null,
+          products: [
+            {
+              id: "p1",
+              name: "Консультация 30 мин",
+              description: "Персональный разбор запроса и план действий.",
+              priceUsd: 25,
+              priceRub: 2300,
+              photo: null,
+              out: false
             }
-          },
-          "2": {
-            name: "Сеты",
-            products: {
-              "1": {
-                name: "Тестовый сет",
-                description: "Полный сет для героя",
-                price_usd: 12,
-                price_rub: 1100,
-                out_of_stock: false
-              }
-            }
-          }
+          ]
+        },
+        {
+          id: "c2",
+          name: "Подписки",
+          photo: null,
+          products: []
         }
-      };
-      renderCategories();
+      ]
+    };
+
+    let state = loadState();
+    let mode = "catalog"; // catalog | admin
+    let path = { catId: null, productId: null };
+    let unlocked = sessionStorage.getItem("destore-unlocked") === "1";
+    let toast = "";
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return structuredClone(seed);
+        const parsed = JSON.parse(raw);
+        if (!parsed?.categories) return structuredClone(seed);
+        return parsed;
+      } catch {
+        return structuredClone(seed);
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function uid() {
+      return Math.random().toString(36).slice(2, 10);
+    }
+
+    function money(p) {
+      return `$${Number(p.priceUsd) || 0} · ${Number(p.priceRub) || 0}₽`;
+    }
+
+    function thumb(photo, name, large = false) {
+      if (photo) {
+        return `<img class="thumb${large ? " lg" : ""}" src="${photo}" alt="" />`;
+      }
+      const letter = (name || "?").trim().charAt(0).toUpperCase();
+      return `<div class="thumb-ph${large ? " lg" : ""}">${letter}</div>`;
+    }
+
+    async function fileToThumb(file) {
+      const bitmap = await createImageBitmap(file);
+      const size = 320;
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext("2d");
+      const scale = Math.max(size / bitmap.width, size / bitmap.height);
+      const w = bitmap.width * scale;
+      const h = bitmap.height * scale;
+      ctx.drawImage(bitmap, (size - w) / 2, (size - h) / 2, w, h);
+      return canvas.toDataURL("image/jpeg", 0.8);
+    }
+
+    function findCat(id) {
+      return state.categories.find((c) => c.id === id) || null;
+    }
+
+    function findProduct(catId, productId) {
+      const cat = findCat(catId);
+      return cat?.products.find((p) => p.id === productId) || null;
+    }
+
+    function setToast(msg) {
+      toast = msg;
+      render();
+      if (msg) setTimeout(() => { if (toast === msg) { toast = ""; render(); } }, 2200);
+    }
+
+    function render() {
+      const root = document.getElementById("view");
+      document.getElementById("toggleAdmin").textContent = mode === "admin" ? "Витрина" : "Управление";
+
+      if (mode === "admin") {
+        root.innerHTML = renderAdmin();
+        bindAdmin();
+        return;
+      }
+
+      if (path.productId && path.catId) {
+        root.innerHTML = renderProduct();
+        return;
+      }
+
+      if (path.catId) {
+        root.innerHTML = renderCategory();
+        return;
+      }
+
+      root.innerHTML = renderCategories();
     }
 
     function renderCategories() {
-      const list = document.getElementById('categoriesList');
-      const empty = document.getElementById('emptyCategories');
-      list.innerHTML = '';
-      const cats = Object.entries(data.categories);
-
-      if (cats.length === 0) {
-        empty.classList.remove('hidden');
-        return;
+      const cats = state.categories;
+      if (!cats.length) {
+        return `<div class="section-label">Категории</div><div class="empty">Пока нет категорий.<br/>Открой Управление и добавь первую.</div>`;
       }
-      empty.classList.add('hidden');
+      return `
+        <div class="section-label">Категории услуг</div>
+        <div class="list">
+          ${cats.map((c) => `
+            <button class="card" data-open-cat="${c.id}">
+              ${thumb(c.photo, c.name)}
+              <div style="min-width:0;flex:1">
+                <div class="card-title">${escapeHtml(c.name)}</div>
+                <div class="card-meta">${c.products.length} услуг</div>
+              </div>
+            </button>
+          `).join("")}
+        </div>
+      `;
+    }
 
-      cats.forEach(([id, cat]) => {
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.innerHTML = `<div class="card-title">${cat.name}</div>`;
-        div.onclick = () => openCategory(id);
-        list.appendChild(div);
+    function renderCategory() {
+      const cat = findCat(path.catId);
+      if (!cat) {
+        path.catId = null;
+        return renderCategories();
+      }
+      return `
+        <button class="ghost back" data-back="home">← Категории</button>
+        <div class="detail-head">
+          ${thumb(cat.photo, cat.name)}
+          <div>
+            <div class="brand-kicker" style="margin-bottom:4px">категория</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1">${escapeHtml(cat.name)}</div>
+          </div>
+        </div>
+        <div class="section-label">Услуги</div>
+        ${
+          cat.products.length
+            ? `<div class="list">${cat.products.map((p) => `
+                <button class="card" data-open-product="${p.id}">
+                  ${thumb(p.photo, p.name)}
+                  <div style="min-width:0;flex:1">
+                    <div class="card-title">${escapeHtml(p.name)}</div>
+                    <div class="card-meta price">${money(p)}</div>
+                    ${p.out ? `<span class="badge">Нет в наличии</span>` : ""}
+                  </div>
+                </button>
+              `).join("")}</div>`
+            : `<div class="empty">В этой категории пока нет услуг</div>`
+        }
+      `;
+    }
+
+    function renderProduct() {
+      const cat = findCat(path.catId);
+      const p = findProduct(path.catId, path.productId);
+      if (!cat || !p) {
+        path.productId = null;
+        return renderCategory();
+      }
+      return `
+        <button class="ghost back" data-back="cat">← Назад</button>
+        <div class="detail-head">
+          ${thumb(p.photo, p.name, true)}
+          <div>
+            <div class="card-title" style="font-size:22px">${escapeHtml(p.name)}</div>
+            <div class="card-meta price" style="font-size:16px;margin-top:6px">${money(p)}</div>
+            ${p.out ? `<span class="badge">Нет в наличии</span>` : ""}
+          </div>
+        </div>
+        <p class="hint" style="font-size:14px;color:var(--ink);white-space:pre-wrap;margin-bottom:18px">${escapeHtml(p.description || "Без описания")}</p>
+        <button class="primary" data-buy>Купить</button>
+        <div class="hint" style="text-align:center;margin-top:10px">Откроется чат @desiresceo</div>
+      `;
+    }
+
+    function renderAdmin() {
+      return `
+        <div class="panel stack">
+          <div>
+            <div class="brand-kicker">admin</div>
+            <h3 style="margin-top:4px">Управление Destore</h3>
+            <p class="hint" style="margin-top:8px">Код доступа: <b style="color:var(--gold)">destore</b>. Фото сжимаются в миниатюры со скруглёнными углами.</p>
+          </div>
+          ${toast ? `<div class="msg">${escapeHtml(toast)}</div>` : ""}
+          ${
+            !unlocked
+              ? `
+                <form id="pinForm" class="form-grid">
+                  <input class="field" name="pin" placeholder="Код витрины" autocomplete="off" />
+                  <button class="primary" type="submit">Войти</button>
+                </form>
+              `
+              : `
+                <div class="admin-block">
+                  <form id="catForm" class="form-grid">
+                    <h3>Новая категория</h3>
+                    <input class="field" name="name" placeholder="Название категории" required />
+                    <label class="file-line">Фото категории
+                      <input type="file" name="photo" accept="image/*" />
+                    </label>
+                    <div id="catPreview"></div>
+                    <button class="primary" type="submit">Добавить категорию</button>
+                  </form>
+
+                  <form id="prodForm" class="form-grid">
+                    <h3>Новая услуга</h3>
+                    <select class="select" name="categoryId" required>
+                      ${state.categories.map((c) => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join("")}
+                    </select>
+                    <input class="field" name="name" placeholder="Название услуги" required />
+                    <textarea class="area" name="description" placeholder="Описание"></textarea>
+                    <div class="row-2">
+                      <input class="field" name="usd" inputmode="decimal" placeholder="Цена $" required />
+                      <input class="field" name="rub" inputmode="numeric" placeholder="Цена ₽" required />
+                    </div>
+                    <label class="file-line">Фото услуги
+                      <input type="file" name="photo" accept="image/*" />
+                    </label>
+                    <div id="prodPreview"></div>
+                    <label class="hint"><input type="checkbox" name="out" /> Нет в наличии</label>
+                    <button class="primary" type="submit">Добавить услугу</button>
+                  </form>
+
+                  <div>
+                    <h3>Каталог</h3>
+                    <div class="spacer"></div>
+                    <div class="list">
+                      ${state.categories.map((c) => `
+                        <div class="card" style="cursor:default;flex-direction:column;align-items:stretch;gap:10px">
+                          <div style="display:flex;gap:12px;align-items:center">
+                            ${thumb(c.photo, c.name)}
+                            <div style="flex:1;min-width:0">
+                              <div class="card-title">${escapeHtml(c.name)}</div>
+                              <div class="card-meta">${c.products.length} услуг</div>
+                            </div>
+                            <button class="danger" data-del-cat="${c.id}" type="button">Удалить</button>
+                          </div>
+                          ${c.products.map((p) => `
+                            <div style="display:flex;gap:10px;align-items:center;padding-left:8px">
+                              ${thumb(p.photo, p.name)}
+                              <div style="flex:1;min-width:0">
+                                <div class="card-title" style="font-size:14px">${escapeHtml(p.name)}</div>
+                                <div class="card-meta price">${money(p)}</div>
+                              </div>
+                              <button class="danger" data-del-prod="${c.id}:${p.id}" type="button">Удалить</button>
+                            </div>
+                          `).join("")}
+                        </div>
+                      `).join("")}
+                    </div>
+                  </div>
+
+                  <div class="mini-actions">
+                    <button class="ghost" id="exportBtn" type="button">Экспорт JSON</button>
+                    <button class="ghost" id="resetBtn" type="button">Сбросить демо</button>
+                  </div>
+                </div>
+              `
+          }
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function bindAdmin() {
+      const pinForm = document.getElementById("pinForm");
+      if (pinForm) {
+        pinForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const pin = new FormData(pinForm).get("pin");
+          if (String(pin) === PIN) {
+            unlocked = true;
+            sessionStorage.setItem("destore-unlocked", "1");
+            setToast("Доступ открыт");
+          } else {
+            setToast("Неверный код");
+          }
+        });
+      }
+
+      const catForm = document.getElementById("catForm");
+      if (catForm) {
+        let catPhoto = null;
+        const photoInput = catForm.querySelector('input[name="photo"]');
+        photoInput?.addEventListener("change", async () => {
+          const file = photoInput.files?.[0];
+          if (!file) return;
+          catPhoto = await fileToThumb(file);
+          document.getElementById("catPreview").innerHTML = thumb(catPhoto, "C");
+        });
+        catForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const fd = new FormData(catForm);
+          const name = String(fd.get("name") || "").trim();
+          if (!name) return;
+          state.categories.push({ id: uid(), name, photo: catPhoto, products: [] });
+          saveState();
+          catPhoto = null;
+          setToast("Категория добавлена");
+        });
+      }
+
+      const prodForm = document.getElementById("prodForm");
+      if (prodForm) {
+        let prodPhoto = null;
+        const photoInput = prodForm.querySelector('input[name="photo"]');
+        photoInput?.addEventListener("change", async () => {
+          const file = photoInput.files?.[0];
+          if (!file) return;
+          prodPhoto = await fileToThumb(file);
+          document.getElementById("prodPreview").innerHTML = thumb(prodPhoto, "P");
+        });
+        prodForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          if (!state.categories.length) {
+            setToast("Сначала создай категорию");
+            return;
+          }
+          const fd = new FormData(prodForm);
+          const categoryId = String(fd.get("categoryId"));
+          const cat = findCat(categoryId);
+          if (!cat) return;
+          cat.products.push({
+            id: uid(),
+            name: String(fd.get("name") || "").trim(),
+            description: String(fd.get("description") || "").trim(),
+            priceUsd: Number(String(fd.get("usd")).replace(",", ".")) || 0,
+            priceRub: parseInt(String(fd.get("rub")), 10) || 0,
+            photo: prodPhoto,
+            out: Boolean(fd.get("out"))
+          });
+          saveState();
+          prodPhoto = null;
+          setToast("Услуга добавлена");
+        });
+      }
+
+      document.querySelectorAll("[data-del-cat]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-del-cat");
+          state.categories = state.categories.filter((c) => c.id !== id);
+          saveState();
+          setToast("Категория удалена");
+        });
+      });
+
+      document.querySelectorAll("[data-del-prod]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const [catId, prodId] = String(btn.getAttribute("data-del-prod")).split(":");
+          const cat = findCat(catId);
+          if (!cat) return;
+          cat.products = cat.products.filter((p) => p.id !== prodId);
+          saveState();
+          setToast("Услуга удалена");
+        });
+      });
+
+      document.getElementById("exportBtn")?.addEventListener("click", () => {
+        const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "destore-data.json";
+        a.click();
+      });
+
+      document.getElementById("resetBtn")?.addEventListener("click", () => {
+        state = structuredClone(seed);
+        saveState();
+        setToast("Демо-данные восстановлены");
       });
     }
 
-    function openCategory(id) {
-      currentCategoryId = id;
-      const cat = data.categories[id];
-      document.getElementById('categoryTitle').textContent = cat.name;
-      document.getElementById('categoriesView').classList.add('hidden');
-      document.getElementById('productsView').classList.remove('hidden');
-      document.getElementById('productDetail').classList.remove('active');
+    document.getElementById("toggleAdmin").addEventListener("click", () => {
+      mode = mode === "admin" ? "catalog" : "admin";
+      path = { catId: null, productId: null };
+      render();
+    });
 
-      const list = document.getElementById('productsList');
-      list.innerHTML = '';
-      const products = Object.entries(cat.products || {});
-
-      if (products.length === 0) {
-        list.innerHTML = '<div class="empty">В этой категории пока нет товаров</div>';
-        return;
+    document.getElementById("view").addEventListener("click", (e) => {
+      const t = e.target.closest("[data-open-cat], [data-open-product], [data-back], [data-buy]");
+      if (!t) return;
+      if (t.hasAttribute("data-open-cat")) {
+        path = { catId: t.getAttribute("data-open-cat"), productId: null };
+        render();
+      } else if (t.hasAttribute("data-open-product")) {
+        path.productId = t.getAttribute("data-open-product");
+        render();
+      } else if (t.getAttribute("data-back") === "home") {
+        path = { catId: null, productId: null };
+        render();
+      } else if (t.getAttribute("data-back") === "cat") {
+        path.productId = null;
+        render();
+      } else if (t.hasAttribute("data-buy")) {
+        if (tg?.openTelegramLink) tg.openTelegramLink(BUY_URL);
+        else window.open(BUY_URL, "_blank");
       }
+    });
 
-      products.forEach(([pid, prod]) => {
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.innerHTML = `
-          <div class="card-title">${prod.name}</div>
-          <div class="card-price">$${prod.price_usd} / ${prod.price_rub}₽</div>
-          ${prod.out_of_stock ? '<div class="card-status">Нет в наличии</div>' : ''}
-        `;
-        div.onclick = () => openProduct(pid);
-        list.appendChild(div);
-      });
-    }
-
-    function openProduct(pid) {
-      const prod = data.categories[currentCategoryId].products[pid];
-      document.getElementById('detailName').textContent = prod.name;
-      document.getElementById('detailPrice').textContent = `$${prod.price_usd} / ${prod.price_rub}₽`;
-      document.getElementById('detailDesc').textContent = prod.description || '';
-      document.getElementById('detailStatus').innerHTML = prod.out_of_stock ? '<div class="card-status">Нет в наличии</div>' : '';
-
-      document.getElementById('productsView').classList.add('hidden');
-      document.getElementById('productDetail').classList.add('active');
-    }
-
-    function showCategories() {
-      document.getElementById('categoriesView').classList.remove('hidden');
-      document.getElementById('productsView').classList.add('hidden');
-      document.getElementById('productDetail').classList.remove('active');
-    }
-
-    function showProducts() {
-      document.getElementById('productsView').classList.remove('hidden');
-      document.getElementById('productDetail').classList.remove('active');
-    }
-
-    function buyProduct() {
-      tg.openTelegramLink('https://t.me/desiresceo');
-    }
-
-    loadData();
+    render();
   </script>
 </body>
 </html>
