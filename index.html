@@ -6,7 +6,7 @@
   <title>Каталог</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 
     * {
       margin: 0;
@@ -16,132 +16,142 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #0f0f13;
+      font-family: 'Outfit', sans-serif;
+      background: #07070f;
       color: #fff;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Анимированный фон */
+    /* Мощный анимированный фон */
     .bg {
       position: fixed;
       inset: 0;
-      z-index: -1;
-      background: linear-gradient(125deg, #0f0f13, #1a1a2e, #16213e, #0f3460, #1a1a2e);
-      background-size: 400% 400%;
-      animation: gradient 18s ease infinite;
+      z-index: -2;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.35) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(6, 182, 212, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 60%),
+        #07070f;
+      animation: bgPulse 12s ease-in-out infinite alternate;
     }
 
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @keyframes bgPulse {
+      0% { filter: hue-rotate(0deg) brightness(1); }
+      100% { filter: hue-rotate(25deg) brightness(1.1); }
+    }
+
+    .bg-blur {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      backdrop-filter: blur(60px);
     }
 
     .container {
-      max-width: 480px;
+      max-width: 460px;
       margin: 0 auto;
-      padding: 16px;
-      padding-bottom: 40px;
+      padding: 20px 16px 50px;
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
-      padding-top: 8px;
+      margin-bottom: 28px;
     }
 
     .logo {
-      font-size: 22px;
-      font-weight: 700;
-      background: linear-gradient(90deg, #a78bfa, #60a5fa, #34d399);
+      font-size: 26px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #c084fc, #22d3ee, #f472b6);
+      background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: logoShine 6s ease infinite;
+    }
+
+    @keyframes logoShine {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
     .admin-badge {
-      background: rgba(167, 139, 250, 0.2);
-      border: 1px solid rgba(167, 139, 250, 0.4);
-      color: #c4b5fd;
+      background: linear-gradient(135deg, rgba(192, 132, 252, 0.25), rgba(34, 211, 238, 0.15));
+      border: 1px solid rgba(192, 132, 252, 0.5);
+      color: #e9d5ff;
       font-size: 12px;
-      padding: 4px 10px;
+      font-weight: 600;
+      padding: 5px 12px;
       border-radius: 20px;
       display: none;
+      box-shadow: 0 0 15px rgba(192, 132, 252, 0.3);
     }
 
     .section-title {
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       margin-bottom: 14px;
-      color: #e2e8f0;
-    }
-
-    /* Карточки категорий */
-    .categories, .products {
-      display: grid;
-      gap: 12px;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 16px;
-      transition: all 0.25s ease;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       position: relative;
       overflow: hidden;
     }
 
     .card:active {
-      transform: scale(0.97);
+      transform: scale(0.975);
     }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(167,139,250,0.1), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .card:hover::before {
-      opacity: 1;
+    .card:hover {
+      border-color: rgba(192, 132, 252, 0.4);
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 8px 30px rgba(139, 92, 246, 0.15);
     }
 
     .card-title {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .card-price {
-      font-size: 14px;
-      color: #34d399;
-      font-weight: 500;
+      font-size: 15px;
+      font-weight: 600;
+      color: #2dd4bf;
     }
 
     .card-status {
+      display: inline-block;
+      margin-top: 8px;
       font-size: 12px;
-      color: #f87171;
-      margin-top: 6px;
+      font-weight: 600;
+      color: #fb7185;
+      background: rgba(251, 113, 133, 0.15);
+      padding: 3px 10px;
+      border-radius: 20px;
     }
 
-    /* Кнопки */
     .btn {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 14px 20px;
-      border-radius: 14px;
-      font-weight: 600;
-      font-size: 15px;
+      width: 100%;
+      padding: 16px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 16px;
       border: none;
       cursor: pointer;
       transition: all 0.25s ease;
@@ -150,72 +160,87 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 50%, #22d3ee 100%);
+      background-size: 200% 200%;
       color: white;
-      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+      box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+      animation: btnGlow 4s ease infinite;
+    }
+
+    @keyframes btnGlow {
+      0%, 100% { background-position: 0% 50%; box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5); }
+      50% { background-position: 100% 50%; box-shadow: 0 6px 30px rgba(217, 70, 239, 0.55); }
     }
 
     .btn-primary:active {
       transform: scale(0.96);
-      box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
     }
 
     .btn-primary::after {
       content: '';
       position: absolute;
       top: -50%;
-      left: -50%;
-      width: 200%;
+      left: -60%;
+      width: 40%;
       height: 200%;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.25), transparent);
-      transform: rotate(30deg);
-      animation: shine 4s infinite;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: skewX(-20deg);
+      animation: shine 3.5s infinite;
     }
 
     @keyframes shine {
-      0% { transform: translateX(-100%) rotate(30deg); }
-      20% { transform: translateX(100%) rotate(30deg); }
-      100% { transform: translateX(100%) rotate(30deg); }
+      0% { left: -60%; }
+      20% { left: 120%; }
+      100% { left: 120%; }
     }
 
     .btn-back {
-      background: rgba(255,255,255,0.08);
-      color: #e2e8f0;
-      margin-bottom: 16px;
-      width: 100%;
+      background: rgba(255,255,255,0.06);
+      color: #cbd5e1;
+      margin-bottom: 18px;
+      font-weight: 500;
+      font-size: 15px;
     }
 
     .product-detail {
       display: none;
+      animation: fadeIn 0.3s ease;
     }
 
     .product-detail.active {
       display: block;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .product-name {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 8px;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.3;
     }
 
     .product-price {
-      font-size: 18px;
-      color: #34d399;
-      margin-bottom: 12px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #2dd4bf;
+      margin-bottom: 16px;
     }
 
     .product-desc {
       color: #94a3b8;
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 24px;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 28px;
     }
 
     .empty {
       text-align: center;
       color: #64748b;
-      padding: 40px 20px;
+      padding: 50px 20px;
       font-size: 15px;
     }
 
@@ -226,6 +251,7 @@
 </head>
 <body>
   <div class="bg"></div>
+  <div class="bg-blur"></div>
 
   <div class="container">
     <header>
@@ -233,31 +259,26 @@
       <div class="admin-badge" id="adminBadge">Админ</div>
     </header>
 
-    <!-- Список категорий -->
     <div id="categoriesView">
       <div class="section-title">Категории</div>
-      <div class="categories" id="categoriesList"></div>
+      <div id="categoriesList"></div>
       <div class="empty hidden" id="emptyCategories">Категорий пока нет</div>
     </div>
 
-    <!-- Список товаров -->
     <div id="productsView" class="hidden">
-      <button class="btn btn-back" onclick="showCategories()">← Назад</button>
+      <button class="btn btn-back" onclick="showCategories()">← Назад к категориям</button>
       <div class="section-title" id="categoryTitle">Товары</div>
-      <div class="products" id="productsList"></div>
+      <div id="productsList"></div>
     </div>
 
-    <!-- Карточка товара -->
     <div id="productDetail" class="product-detail">
       <button class="btn btn-back" onclick="showProducts()">← Назад</button>
       <div class="product-name" id="detailName"></div>
       <div class="product-price" id="detailPrice"></div>
       <div class="product-desc" id="detailDesc"></div>
-      <div id="detailStatus" class="card-status"></div>
-      <br>
-      <button class="btn btn-primary" style="width:100%" onclick="buyProduct()">
-        🛒 Купить
-      </button>
+      <div id="detailStatus"></div>
+      <br><br>
+      <button class="btn btn-primary" onclick="buyProduct()">🛒 Купить</button>
     </div>
   </div>
 
@@ -265,24 +286,19 @@
     const ADMINS = [7535464331, 8404412552];
     let data = { categories: {} };
     let currentCategoryId = null;
-    let currentProduct = null;
 
-    // Инициализация Telegram WebApp
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
-    tg.setHeaderColor('#0f0f13');
-    tg.setBackgroundColor('#0f0f13');
+    tg.setHeaderColor('#07070f');
+    tg.setBackgroundColor('#07070f');
 
-    // Проверка админа
     const user = tg.initDataUnsafe?.user;
     if (user && ADMINS.includes(user.id)) {
       document.getElementById('adminBadge').style.display = 'inline-block';
     }
 
-    // Загрузка данных (пока тестовые, потом подключим JSON)
     function loadData() {
-      // Временные тестовые данные
       data = {
         categories: {
           "1": {
@@ -290,23 +306,31 @@
             products: {
               "1": {
                 name: "I always wanted to die",
-                description: "Голова Phantom Lancer\nImmortal",
+                description: "Голова Phantom Lancer\nImmortal\nМожно обменять и продать",
                 price_usd: 28,
                 price_rub: 2500,
                 out_of_stock: false
               },
               "2": {
-                name: "Пример товара 2",
-                description: "Описание второго товара",
-                price_usd: 15,
-                price_rub: 1400,
+                name: "Пример Immortal 2",
+                description: "Красивый предмет для героя",
+                price_usd: 45,
+                price_rub: 4100,
                 out_of_stock: true
               }
             }
           },
           "2": {
             name: "Сеты",
-            products: {}
+            products: {
+              "1": {
+                name: "Тестовый сет",
+                description: "Полный сет для героя",
+                price_usd: 12,
+                price_rub: 1100,
+                out_of_stock: false
+              }
+            }
           }
         }
       };
@@ -317,8 +341,8 @@
       const list = document.getElementById('categoriesList');
       const empty = document.getElementById('emptyCategories');
       list.innerHTML = '';
-
       const cats = Object.entries(data.categories);
+
       if (cats.length === 0) {
         empty.classList.remove('hidden');
         return;
@@ -344,8 +368,8 @@
 
       const list = document.getElementById('productsList');
       list.innerHTML = '';
-
       const products = Object.entries(cat.products || {});
+
       if (products.length === 0) {
         list.innerHTML = '<div class="empty">В этой категории пока нет товаров</div>';
         return;
@@ -357,7 +381,7 @@
         div.innerHTML = `
           <div class="card-title">${prod.name}</div>
           <div class="card-price">$${prod.price_usd} / ${prod.price_rub}₽</div>
-          ${prod.out_of_stock ? '<div class="card-status">❌ Нет в наличии</div>' : ''}
+          ${prod.out_of_stock ? '<div class="card-status">Нет в наличии</div>' : ''}
         `;
         div.onclick = () => openProduct(pid);
         list.appendChild(div);
@@ -366,12 +390,10 @@
 
     function openProduct(pid) {
       const prod = data.categories[currentCategoryId].products[pid];
-      currentProduct = prod;
-
       document.getElementById('detailName').textContent = prod.name;
       document.getElementById('detailPrice').textContent = `$${prod.price_usd} / ${prod.price_rub}₽`;
       document.getElementById('detailDesc').textContent = prod.description || '';
-      document.getElementById('detailStatus').textContent = prod.out_of_stock ? '❌ Нет в наличии' : '';
+      document.getElementById('detailStatus').innerHTML = prod.out_of_stock ? '<div class="card-status">Нет в наличии</div>' : '';
 
       document.getElementById('productsView').classList.add('hidden');
       document.getElementById('productDetail').classList.add('active');
@@ -392,7 +414,6 @@
       tg.openTelegramLink('https://t.me/desiresceo');
     }
 
-    // Запуск
     loadData();
   </script>
 </body>
