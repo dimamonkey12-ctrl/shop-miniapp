@@ -47,6 +47,10 @@ body::before {
   from { opacity:0; transform:translateY(8px) }
   to { opacity:1; transform:translateY(0) }
 }
+@keyframes keyBounce {
+  0%, 100% { transform:translateY(0) rotate(0deg); }
+  50% { transform:translateY(-14px) rotate(-6deg); }
+}
 button,input,textarea,select { font:inherit }
 button { cursor:pointer }
 button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible {
@@ -64,6 +68,7 @@ header {
 }
 .brand { display:flex; align-items:center; gap:12px }
 .key-logo { width:43px; height:43px; flex-shrink:0 }
+.key-logo.playing { animation:keyBounce .9s cubic-bezier(.6,.05,.4,.95) }
 .brand-title { font-size:25px; font-weight:800; letter-spacing:.18em }
 .brand-sub { font-size:10px; color:var(--muted); letter-spacing:.2em; margin-top:5px }
 .header-actions { display:flex; gap:8px; flex-wrap:wrap }
@@ -80,7 +85,6 @@ header {
 .btn.danger { color:#e58b8b }
 .btn.theme-btn { min-width:160px; text-align:center }
 
-/* SCREENS */
 .screen { display:none; animation:appear .3s ease }
 .screen.active { display:block }
 .eyebrow { color:var(--gold2); font-size:10px; letter-spacing:.24em; font-weight:800 }
@@ -98,7 +102,6 @@ header {
   border-bottom:1px solid var(--line);
 }
 
-/* SEARCH */
 .search-wrap { margin:16px 0 4px }
 .search {
   width:100%; border:1px solid var(--line); border-radius:14px;
@@ -106,7 +109,6 @@ header {
   font-size:13px;
 }
 
-/* CATEGORY CARDS */
 .cat-grid {
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
@@ -118,6 +120,7 @@ header {
   color:var(--text); text-align:left; cursor:pointer;
   transition:.25s; display:flex; flex-direction:column; gap:10px;
   min-height:130px; position:relative; overflow:hidden;
+  align-items:flex-start;
 }
 .cat-card:hover { transform:translateY(-3px); border-color:var(--gold2) }
 .cat-card::after {
@@ -126,17 +129,21 @@ header {
   background:radial-gradient(circle,rgba(176,136,66,.16),transparent 70%);
   pointer-events:none;
 }
-.cat-card-icon { font-size:22px; color:var(--gold2) }
-.cat-card-title { font-size:17px; font-weight:800; letter-spacing:.02em }
-.cat-card-count { font-size:11px; color:var(--muted) }
+.cat-card-img {
+  width:64px; height:64px; border-radius:16px;
+  object-fit:cover; border:1px solid var(--line);
+  background:var(--panel2);
+}
+.cat-card-icon { font-size:22px; color:var(--gold2); line-height:64px; height:64px }
+.cat-card-title { font-size:17px; font-weight:800; letter-spacing:.02em; position:relative; z-index:1 }
+.cat-card-count { font-size:11px; color:var(--muted); position:relative; z-index:1 }
 .cat-card.about-card {
   grid-column:1/-1; background:linear-gradient(135deg,rgba(176,136,66,.14),rgba(122,92,46,.08));
   border-color:rgba(176,136,66,.35); min-height:auto;
   flex-direction:row; align-items:center; gap:14px;
 }
-.cat-card.about-card .cat-card-icon { font-size:20px }
+.cat-card.about-card .cat-card-icon { font-size:20px; height:auto; line-height:1 }
 
-/* PRODUCTS */
 .grid {
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -185,8 +192,6 @@ footer {
   display:flex; justify-content:space-between; gap:12px;
   color:var(--muted); font-size:11px;
 }
-
-/* BACK BUTTON */
 .back-btn {
   display:inline-flex; align-items:center; gap:6px;
   background:transparent; border:1px solid var(--line);
@@ -195,7 +200,6 @@ footer {
 }
 .back-btn:hover { color:var(--text); border-color:var(--gold2) }
 
-/* ABOUT SCREEN BUTTONS */
 .about-buttons {
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
@@ -213,7 +217,6 @@ footer {
 }
 .about-buttons .btn.gold:hover { background:linear-gradient(155deg,rgba(176,136,66,.32),rgba(122,92,46,.18)) }
 
-/* INFO SCREEN */
 .info-content {
   border:1px solid var(--line); border-radius:18px;
   padding:22px; background:linear-gradient(155deg,#ffffff06,#ffffff02);
@@ -223,7 +226,6 @@ footer {
   display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;
 }
 
-/* BOTTOM NAV */
 .bottom-nav {
   position:fixed; z-index:15;
   left:50%; bottom:max(12px,env(safe-area-inset-bottom));
@@ -243,7 +245,6 @@ footer {
   color:#171209;
 }
 
-/* OVERLAYS */
 .overlay {
   position:fixed; inset:0; z-index:30; display:none;
   align-items:center; justify-content:center;
@@ -279,10 +280,9 @@ footer {
 .admin-row .row-buttons { display:flex; gap:5px; flex-shrink:0 }
 .img-preview {
   max-width:100%; max-height:180px; border-radius:12px;
-  border:1px solid var(--line); margin-top:8px;
+  border:1px solid var(--line); margin-top:8px; display:block;
 }
 
-/* SPLASH */
 #splash {
   position:fixed; inset:0; z-index:100; background:#0a0a0c;
   display:flex; align-items:center; justify-content:center;
@@ -294,10 +294,6 @@ footer {
   width:76px; height:76px;
   animation:keyBounce 1.3s cubic-bezier(.6,.05,.4,.95) infinite;
 }
-@keyframes keyBounce {
-  0%, 100% { transform:translateY(0) rotate(0deg); }
-  50% { transform:translateY(-18px) rotate(-6deg); }
-}
 .splash-title { font-size:29px; font-weight:800; letter-spacing:.24em; margin-top:17px }
 .splash-status { font-size:11px; color:#8f8a80; margin-top:24px; min-height:18px }
 .loader { height:2px; background:#ffffff14; margin:18px auto; max-width:220px; overflow:hidden }
@@ -307,13 +303,11 @@ footer {
 }
 @keyframes load { from{transform:translateX(-120%)} to{transform:translateX(380%)} }
 
-/* GATE */
 .gate { text-align:center; max-width:520px }
 .gate h2 { font-size:28px; margin:15px 0 8px }
 .gate .modal-actions { justify-content:center }
 .gate-note { font-size:11px !important; margin-top:16px !important }
 
-/* TOAST */
 .toast {
   position:fixed; z-index:150; left:50%; bottom:100px;
   transform:translate(-50%,15px); opacity:0; pointer-events:none;
@@ -323,33 +317,38 @@ footer {
 }
 .toast.show { opacity:1; transform:translate(-50%,0) }
 
-/* ТЕМЫ */
+/* ============ ТЕМЫ ============ */
+/* Основная (не меняется) */
 body[data-theme="dark"] {
   --bg:#0a0a0c; --panel:#14141a; --panel2:#1a1a22;
   --text:#e8e4dc; --muted:#8f8a80; --line:#2a2a32;
   --gold:#7a5c2e; --gold2:#b08842;
 }
-body[data-theme="noir"] {
-  --bg:#070707; --panel:#111; --panel2:#1a1a1a;
-  --text:#f4f4f4; --muted:#a0a0a0; --line:#343434;
-  --gold:#777; --gold2:#bcbcbc;
+/* Полночь */
+body[data-theme="midnight"] {
+  --bg:#080a14; --panel:#0f1322; --panel2:#151a2c;
+  --text:#e6e8f0; --muted:#8a8fa3; --line:#242a42;
+  --gold:#4a5a9c; --gold2:#7888c8;
 }
-body[data-theme="olive"] {
-  --bg:#0e120a; --panel:#161b10; --panel2:#1e2517;
-  --text:#e9ecd9; --muted:#8f967a; --line:#2d3620;
-  --gold:#5c6a35; --gold2:#8a9a58;
+/* Лес */
+body[data-theme="forest"] {
+  --bg:#0a0f0b; --panel:#121912; --panel2:#18221a;
+  --text:#e0e8dd; --muted:#889182; --line:#25301f;
+  --gold:#3f6b3a; --gold2:#6fa05f;
 }
-body[data-theme="light"] {
+/* Песок (светлая) */
+body[data-theme="sand"] {
   color-scheme:light;
-  --bg:#e8dece; --panel:#f7efe2; --panel2:#e2d4bd;
-  --text:#241b11; --muted:#766858; --line:#cabb9e;
-  --gold:#765222; --gold2:#a17a3c;
+  --bg:#f0e6d4; --panel:#faf3e2; --panel2:#e8dcc0;
+  --text:#2a2014; --muted:#7a6a50; --line:#d4c5a5;
+  --gold:#8a6a30; --gold2:#b89154;
 }
-body[data-theme="white"] {
+/* Роза (светлая) */
+body[data-theme="rose"] {
   color-scheme:light;
-  --bg:#fff; --panel:#fff; --panel2:#f3f0e9;
-  --text:#171512; --muted:#66615a; --line:#ded9cf;
-  --gold:#76551f; --gold2:#a27b37;
+  --bg:#faeef0; --panel:#fff5f6; --panel2:#f3dee1;
+  --text:#2a181c; --muted:#806a70; --line:#dfc6cb;
+  --gold:#8c4a58; --gold2:#b86e7c;
 }
 
 @media(max-width:780px) {
@@ -393,11 +392,11 @@ body[data-theme="white"] {
   </div>
 </div>
 
-<!-- MAIN APP -->
+<!-- APP -->
 <div class="app" id="app" aria-hidden="true">
   <header>
     <div class="brand">
-      <svg class="key-logo" viewBox="0 0 100 100" fill="none">
+      <svg class="key-logo" id="keyLogo" viewBox="0 0 100 100" fill="none">
         <path d="M62 18a22 22 0 1 0 18 35L93 66l-8 8-6-6-6 6-8-8 7-7a22 22 0 0 0-10-41Z"
           stroke="var(--gold2)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="41" cy="40" r="7" stroke="var(--gold)" stroke-width="4"/>
@@ -413,7 +412,7 @@ body[data-theme="white"] {
     </div>
   </header>
 
-  <!-- MAIN SCREEN -->
+  <!-- MAIN -->
   <section class="screen active" id="screenMain">
     <div class="hero">
       <div class="eyebrow">Selected for you · 2026</div>
@@ -428,7 +427,7 @@ body[data-theme="white"] {
     <div class="grid" id="searchResults" style="margin-top:14px"></div>
   </section>
 
-  <!-- CATEGORY SCREEN -->
+  <!-- CATEGORY -->
   <section class="screen" id="screenCategory">
     <button class="back-btn" id="backFromCategory">← Назад</button>
     <div class="hero" style="padding:6px 0 0">
@@ -438,7 +437,7 @@ body[data-theme="white"] {
     <section class="grid" id="productsGrid" style="margin-top:18px"></section>
   </section>
 
-  <!-- ABOUT SCREEN -->
+  <!-- ABOUT -->
   <section class="screen" id="screenAbout">
     <button class="back-btn" id="backFromAbout">← Назад</button>
     <div class="hero" style="padding:6px 0 0">
@@ -455,7 +454,7 @@ body[data-theme="white"] {
     </div>
   </section>
 
-  <!-- INFO SCREEN -->
+  <!-- INFO -->
   <section class="screen" id="screenInfo">
     <button class="back-btn" id="backFromInfo">← Назад</button>
     <div class="hero" style="padding:6px 0 0">
@@ -472,7 +471,7 @@ body[data-theme="white"] {
   </footer>
 </div>
 
-<!-- BOTTOM NAV -->
+<!-- NAV -->
 <nav class="bottom-nav" id="bottomNav">
   <button class="nav-button active" id="mainNav">⌂ Главная</button>
   <button class="nav-button" id="aboutNav">☰ О нас и ссылки</button>
@@ -491,7 +490,7 @@ body[data-theme="white"] {
   </div>
 </div>
 
-<!-- PRODUCT DETAIL -->
+<!-- PRODUCT -->
 <div class="overlay" id="productOverlay">
   <div class="modal">
     <img id="detailImage" class="img-preview" style="display:none;width:100%;max-height:280px;object-fit:cover;margin-bottom:14px" alt="">
@@ -512,20 +511,33 @@ body[data-theme="white"] {
 <div class="overlay" id="adminOverlay">
   <div class="modal">
     <h2>Управление каталогом</h2>
-    <p>Создавай категории, добавляй товары. Фото — с компьютера (до 2 МБ) или ссылкой.</p>
+    <p>Создавай категории с аватарками, добавляй товары внутрь категорий. Фото — с компьютера (до 2 МБ) или ссылкой.</p>
 
-    <h3 class="subheading">Управление категориями</h3>
+    <h3 class="subheading">Категории</h3>
     <div class="field">
-      <label>Категория для изменения</label>
-      <select id="manageCategory"></select>
+      <label>Выбрать категорию для изменения</label>
+      <select id="manageCategory"><option value="">— новая категория —</option></select>
     </div>
     <div class="field">
-      <label>Название категории / новое название</label>
+      <label>Название категории</label>
       <input id="newCategoryName" placeholder="Например, Игры">
     </div>
+    <div class="field">
+      <label>Аватарка — ссылка</label>
+      <input id="newCategoryImage" type="url" placeholder="https://…">
+    </div>
+    <div class="field">
+      <label>Аватарка — файл</label>
+      <input id="newCategoryImageFile" type="file" accept="image/*">
+      <div class="small-note">До 2 МБ. Сохраняется как data URL.</div>
+    </div>
+    <div class="field" id="categoryPreviewWrap" style="display:none">
+      <label>Предпросмотр</label>
+      <img id="categoryPreview" class="img-preview" alt="">
+    </div>
     <div class="modal-actions">
-      <button class="btn gold" id="addCategoryBtn">Добавить категорию</button>
-      <button class="btn" id="renameCategoryBtn">Переименовать</button>
+      <button class="btn gold" id="saveCategoryBtn">Сохранить категорию</button>
+      <button class="btn" id="resetCategoryBtn">Сбросить поля</button>
       <button class="btn danger" id="deleteCategoryBtn">Удалить категорию</button>
     </div>
 
@@ -598,22 +610,23 @@ body[data-theme="white"] {
 
   const CHANNEL_URL = 'https://t.me/desiresale';
   const REVIEWS_URL = 'https://t.me/therenoreviews';
-  const CONTACT_URL  = 'https://t.me/desiresceo';
+  const CONTACT_URL = 'https://t.me/desiresceo';
+  const AGREEMENT_URL = 'https://telegra.ph/fdf-10-15';
 
-  const THEME_KEY = 'destore-theme-v7';
-  const themes = ['dark','noir','olive','light','white'];
+  const THEME_KEY = 'destore-theme-v8';
+  const themes = ['dark','midnight','forest','sand','rose'];
   const ADMIN_IDS = [7535464331, 8404412552];
 
   const $ = id => document.getElementById(id);
   const tg = window.Telegram?.WebApp;
 
-  let categories = [];
+  let categories = []; // [{name, image}]
   let products = [];
   let activeCategory = null;
   let editingId = null;
-  let currentScreen = 'screenMain';
+  let editingCategoryName = null; // для редактирования категории
 
-  // ---------- ADMIN CHECK ----------
+  // ---------- ADMIN ----------
   const tgUser = tg?.initDataUnsafe?.user;
   const isAdmin = !!(tgUser && ADMIN_IDS.includes(Number(tgUser.id)));
   if (isAdmin) $('adminBtn').style.display = '';
@@ -644,12 +657,44 @@ body[data-theme="white"] {
     if (tg && url.startsWith('https://t.me/')) tg.openTelegramLink(url);
     else window.open(url, '_blank', 'noopener,noreferrer');
   }
+  function plural(n, one, few, many) {
+    const m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return one;
+    if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
+    return many;
+  }
+  function normalizeCategories(raw) {
+    if (!Array.isArray(raw)) return [];
+    const out = [];
+    for (const item of raw) {
+      if (typeof item === 'string') {
+        out.push({ name: item, image: '' });
+      } else if (item && typeof item === 'object' && item.name) {
+        out.push({ name: String(item.name), image: item.image || '' });
+      }
+    }
+    return out;
+  }
+  function categoryByName(name) {
+    return categories.find(c => c.name === name);
+  }
+
+  // ---------- KEY LOGO ANIMATION ----------
+  const keyLogo = $('keyLogo');
+  function playKeyAnim() {
+    if (!keyLogo) return;
+    keyLogo.classList.remove('playing');
+    void keyLogo.offsetWidth;
+    keyLogo.classList.add('playing');
+  }
+  document.addEventListener('click', e => {
+    if (e.target.closest('button')) playKeyAnim();
+  }, true);
 
   // ---------- THEME ----------
   function applyTheme() {
     const saved = localStorage.getItem(THEME_KEY) || 'dark';
-    const idx = Math.max(0, themes.indexOf(saved));
-    const name = themes[idx];
+    const name = themes.includes(saved) ? saved : 'dark';
     document.body.dataset.theme = name;
     localStorage.setItem(THEME_KEY, name);
     const bg = getComputedStyle(document.body).getPropertyValue('--bg').trim();
@@ -670,15 +715,9 @@ body[data-theme="white"] {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const el = $(id);
     if (el) el.classList.add('active');
-    currentScreen = id;
-    // nav highlight
     document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
-    if (id === 'screenMain' || id === 'screenCategory' || id === 'screenInfo') {
-      $('mainNav').classList.add('active');
-    }
-    if (id === 'screenAbout') {
-      $('aboutNav').classList.add('active');
-    }
+    if (id === 'screenAbout') $('aboutNav').classList.add('active');
+    else $('mainNav').classList.add('active');
     window.scrollTo({top:0, behavior:'smooth'});
   }
 
@@ -687,8 +726,8 @@ body[data-theme="white"] {
     const res = await fetch('/api/catalog?t=' + Date.now(), { cache: 'no-store' });
     if (!res.ok) throw new Error('Не удалось загрузить каталог');
     const data = await res.json();
-    categories = Array.isArray(data.categories) ? data.categories : [];
-    products   = Array.isArray(data.products)   ? data.products   : [];
+    categories = normalizeCategories(data.categories);
+    products = Array.isArray(data.products) ? data.products : [];
   }
   async function saveCatalog() {
     const initData = tg?.initData || '';
@@ -706,21 +745,15 @@ body[data-theme="white"] {
     return data;
   }
   async function persist() {
-    try {
-      await saveCatalog();
-      return true;
-    } catch (e) {
-      toast(e.message || 'Ошибка сохранения');
-      return false;
-    }
+    try { await saveCatalog(); return true; }
+    catch (e) { toast(e.message || 'Ошибка сохранения'); return false; }
   }
 
-  // ---------- RENDERING ----------
+  // ---------- RENDER ----------
   function renderMain() {
     const query = ($('search').value || '').trim().toLowerCase();
 
     if (query) {
-      // Показать результаты поиска вместо категорий
       $('catGrid').style.display = 'none';
       const list = products.filter(p => {
         const t = `${p.title} ${p.description} ${p.category}`.toLowerCase();
@@ -744,30 +777,29 @@ body[data-theme="white"] {
           <span class="cat-card-title">О нас и ссылки</span>
         </button>
       `;
-    } else {
-      const catCards = categories.map(cat => {
-        const count = products.filter(p => p.category === cat).length;
-        return `
-          <button class="cat-card" data-cat="${esc(cat)}">
-            <span class="cat-card-icon">◆</span>
-            <span class="cat-card-title">${esc(cat)}</span>
-            <span class="cat-card-count">${count} ${plural(count,'товар','товара','товаров')}</span>
-          </button>
-        `;
-      }).join('');
-      $('catGrid').innerHTML = catCards + `
-        <button class="cat-card about-card" id="aboutCardMain">
-          <span class="cat-card-icon">☰</span>
-          <span class="cat-card-title">О нас и ссылки</span>
+      return;
+    }
+
+    const catCards = categories.map(cat => {
+      const count = products.filter(p => p.category === cat.name).length;
+      const media = cat.image
+        ? `<img class="cat-card-img" src="${esc(cat.image)}" alt="" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=&quot;cat-card-icon&quot;>◆</span>')">`
+        : `<span class="cat-card-icon">◆</span>`;
+      return `
+        <button class="cat-card" data-cat="${esc(cat.name)}">
+          ${media}
+          <span class="cat-card-title">${esc(cat.name)}</span>
+          <span class="cat-card-count">${count} ${plural(count,'товар','товара','товаров')}</span>
         </button>
       `;
-    }
-  }
-  function plural(n, one, few, many) {
-    const m10 = n % 10, m100 = n % 100;
-    if (m10 === 1 && m100 !== 11) return one;
-    if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
-    return many;
+    }).join('');
+
+    $('catGrid').innerHTML = catCards + `
+      <button class="cat-card about-card" id="aboutCardMain">
+        <span class="cat-card-icon">☰</span>
+        <span class="cat-card-title">О нас и ссылки</span>
+      </button>
+    `;
   }
 
   function productCard(p) {
@@ -803,10 +835,24 @@ body[data-theme="white"] {
   }
 
   function renderAdmin() {
-    const options = categories.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
-    $('fCategory').innerHTML = options || '<option value="">Сначала создай категорию</option>';
-    $('manageCategory').innerHTML = options || '<option value="">Нет категорий</option>';
+    // Select для товаров
+    const opts = categories.map(c => `<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('');
+    $('fCategory').innerHTML = opts || '<option value="">Сначала создай категорию</option>';
 
+    // Select для управления категориями
+    $('manageCategory').innerHTML =
+      '<option value="">— новая категория —</option>' +
+      categories.map(c => `<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('');
+
+    // Если редактируем существующую — выставить её
+    if (editingCategoryName && categoryByName(editingCategoryName)) {
+      $('manageCategory').value = editingCategoryName;
+    } else {
+      editingCategoryName = null;
+      $('manageCategory').value = '';
+    }
+
+    // Список товаров
     $('adminList').innerHTML = products.length
       ? products.map(p => `
         <div class="admin-row">
@@ -823,7 +869,7 @@ body[data-theme="white"] {
       : '<p>Товаров пока нет.</p>';
   }
 
-  // ---------- FORM ----------
+  // ---------- PRODUCT FORM ----------
   function clearForm() {
     editingId = null;
     ['fTitle','fPriceUSD','fPriceRUB','fDescription','fImageURL','fLink']
@@ -833,12 +879,12 @@ body[data-theme="white"] {
     $('formHeading').textContent = 'Добавить товар';
     $('saveProduct').textContent = 'Добавить товар';
     updateImagePreview();
-    if (categories.length) $('fCategory').value = categories[0];
+    if (categories.length) $('fCategory').value = categories[0].name;
   }
   function fillForm(p) {
     editingId = p.id;
     $('fTitle').value = p.title || '';
-    $('fCategory').value = p.category || categories[0] || '';
+    $('fCategory').value = p.category || (categories[0]?.name || '');
     $('fPriceUSD').value = p.usd ?? '';
     $('fPriceRUB').value = p.rub ?? '';
     $('fDescription').value = p.description || '';
@@ -855,21 +901,67 @@ body[data-theme="white"] {
     const file = $('fImageFile').files?.[0];
     if (file) {
       const r = new FileReader();
-      r.onload = () => showPreview(r.result);
+      r.onload = () => showPreview($('imagePreview'), $('imagePreviewField'), r.result);
       r.readAsDataURL(file);
       return;
     }
-    if (url) { showPreview(url); return; }
-    // если редактируем и есть старое data-url, показать его
+    if (url) { showPreview($('imagePreview'), $('imagePreviewField'), url); return; }
     if (editingId) {
       const p = products.find(x => x.id === editingId);
-      if (p?.image) { showPreview(p.image); return; }
+      if (p?.image) { showPreview($('imagePreview'), $('imagePreviewField'), p.image); return; }
     }
     $('imagePreviewField').style.display = 'none';
   }
-  function showPreview(src) {
-    $('imagePreview').src = src;
-    $('imagePreviewField').style.display = '';
+  function showPreview(imgEl, wrapEl, src) {
+    imgEl.src = src;
+    wrapEl.style.display = '';
+  }
+
+  // ---------- CATEGORY FORM ----------
+  function clearCategoryForm() {
+    editingCategoryName = null;
+    $('newCategoryName').value = '';
+    $('newCategoryImage').value = '';
+    $('newCategoryImageFile').value = '';
+    $('categoryPreviewWrap').style.display = 'none';
+    $('manageCategory').value = '';
+  }
+  function fillCategoryForm(name) {
+    const cat = categoryByName(name);
+    if (!cat) return;
+    editingCategoryName = cat.name;
+    $('newCategoryName').value = cat.name;
+    $('newCategoryImage').value = cat.image && !cat.image.startsWith('data:') ? cat.image : '';
+    $('newCategoryImageFile').value = '';
+    if (cat.image) {
+      showPreview($('categoryPreview'), $('categoryPreviewWrap'), cat.image);
+    } else {
+      $('categoryPreviewWrap').style.display = 'none';
+    }
+  }
+  function updateCategoryPreview() {
+    const file = $('newCategoryImageFile').files?.[0];
+    if (file) {
+      const r = new FileReader();
+      r.onload = () => showPreview($('categoryPreview'), $('categoryPreviewWrap'), r.result);
+      r.readAsDataURL(file);
+      return;
+    }
+    const url = $('newCategoryImage').value.trim();
+    if (url) { showPreview($('categoryPreview'), $('categoryPreviewWrap'), url); return; }
+    if (editingCategoryName) {
+      const cat = categoryByName(editingCategoryName);
+      if (cat?.image) { showPreview($('categoryPreview'), $('categoryPreviewWrap'), cat.image); return; }
+    }
+    $('categoryPreviewWrap').style.display = 'none';
+  }
+  async function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
   }
 
   // ---------- EVENTS ----------
@@ -906,14 +998,12 @@ body[data-theme="white"] {
     $('productOverlay').classList.add('show');
   }
 
-  // NAV
   $('mainNav').addEventListener('click', () => showScreen('screenMain'));
   $('aboutNav').addEventListener('click', () => showScreen('screenAbout'));
   $('backFromCategory').addEventListener('click', () => showScreen('screenMain'));
   $('backFromAbout').addEventListener('click', () => showScreen('screenMain'));
   $('backFromInfo').addEventListener('click', () => showScreen('screenAbout'));
 
-  // ABOUT BUTTONS
   $('aboutButtons').addEventListener('click', e => {
     const btn = e.target.closest('[data-info]');
     if (!btn) return;
@@ -922,11 +1012,31 @@ body[data-theme="white"] {
 
   function openInfo(kind) {
     const map = {
-      about: ['О нас', 'Destore — каталог цифровых товаров, подписок и услуг. Наличие, стоимость и условия могут меняться; уточняй детали перед оплатой.', []],
-      reviews: ['Отзывы', 'Отзывы и впечатления покупателей в нашем Telegram.', [{label:'Открыть отзывы', url:REVIEWS_URL}]],
-      agreement: ['Пользовательское соглашение', 'Информация о товарах и ценах может обновляться. До оплаты уточняй наличие, итоговую стоимость, сроки и условия у продавца. Не отправляй пароли, коды подтверждения и банковские данные в чаты. Этот краткий текст не заменяет полноценную юридическую оферту.', []],
-      support: ['Поддержка', 'Если возник вопрос по товару или заказу, напиши нам в Telegram.', [{label:'Написать в поддержку', url:CONTACT_URL}]],
-      contact: ['Связаться', 'Связаться с нами можно напрямую в Telegram.', [{label:'Открыть Telegram', url:CONTACT_URL}]]
+      about: [
+        'О нас',
+        'Destore — работаем уже около 2х лет, имеем репутацию и свежий материал, все товары которые вы можете приобрести, сдать - все можно узнать в мини-приложении. Ждем ваших покупок!',
+        []
+      ],
+      reviews: [
+        'Отзывы',
+        'Отзывы и впечатления покупателей в нашем Telegram.',
+        [{label:'Открыть отзывы', url:REVIEWS_URL}]
+      ],
+      agreement: [
+        'Пользовательское соглашение',
+        'Полный текст пользовательского соглашения доступен по кнопке ниже. Информация о товарах и ценах может обновляться. До оплаты уточняй наличие, итоговую стоимость, сроки и условия у продавца.',
+        [{label:'Открыть соглашение', url:AGREEMENT_URL}]
+      ],
+      support: [
+        'Поддержка',
+        'Если возник вопрос по товару или заказу, напиши нам в Telegram.',
+        [{label:'Написать в поддержку', url:CONTACT_URL}]
+      ],
+      contact: [
+        'Связаться',
+        'Связаться с нами можно напрямую в Telegram.',
+        [{label:'Открыть Telegram', url:CONTACT_URL}]
+      ]
     }[kind];
     if (!map) return;
     $('infoTitle').textContent = map[0];
@@ -941,51 +1051,111 @@ body[data-theme="white"] {
     if (l) tgOpen(l.dataset.url);
   });
 
-  // ADMIN
+  // ---------- ADMIN OPEN ----------
   $('adminBtn').addEventListener('click', () => {
     if (!isAdmin) return toast('Нет доступа');
     clearForm();
+    clearCategoryForm();
     renderAdmin();
     $('adminOverlay').classList.add('show');
   });
 
+  // Product form
   $('clearFormBtn').addEventListener('click', () => { clearForm(); toast('Поля очищены'); });
-
   $('fImageURL').addEventListener('input', () => updateImagePreview());
   $('fImageFile').addEventListener('change', () => updateImagePreview());
 
-  $('addCategoryBtn').addEventListener('click', async () => {
+  // Category select change
+  $('manageCategory').addEventListener('change', () => {
+    const name = $('manageCategory').value;
+    if (!name) { clearCategoryForm(); return; }
+    fillCategoryForm(name);
+  });
+
+  // Category preview
+  $('newCategoryImage').addEventListener('input', updateCategoryPreview);
+  $('newCategoryImageFile').addEventListener('change', updateCategoryPreview);
+
+  // Save category (add or update)
+  $('saveCategoryBtn').addEventListener('click', async () => {
     if (!isAdmin) return;
     const name = $('newCategoryName').value.trim();
     if (!name) return toast('Введи название категории');
-    if (categories.some(c => c.toLowerCase() === name.toLowerCase())) return toast('Такая категория уже есть');
-    categories.push(name);
-    $('newCategoryName').value = '';
-    if (await persist()) { renderMain(); renderAdmin(); toast('Категория добавлена'); }
+
+    let image = $('newCategoryImage').value.trim();
+    const file = $('newCategoryImageFile').files?.[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) return toast('Выбери файл изображения');
+      if (file.size > 2 * 1024 * 1024) return toast('Аватарка больше 2 МБ');
+      try { image = await readFileAsDataURL(file); }
+      catch { return toast('Не удалось прочитать изображение'); }
+    }
+
+    // Редактирование существующей
+    if (editingCategoryName && categoryByName(editingCategoryName)) {
+      const oldName = editingCategoryName;
+      // проверка на дубликат имени
+      if (oldName !== name && categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+        return toast('Такая категория уже есть');
+      }
+      categories = categories.map(c =>
+        c.name === oldName
+          ? { name, image: image || (image === '' ? '' : c.image) }
+          : c
+      );
+      if (oldName !== name) {
+        products = products.map(p => p.category === oldName ? {...p, category:name} : p);
+        if (activeCategory === oldName) activeCategory = name;
+      }
+      // Если image не задан явно — оставляем как было, а если пусто — очищаем
+      if (!image) {
+        categories = categories.map(c => c.name === name ? {...c, image:''} : c);
+      }
+      if (await persist()) {
+        renderMain(); renderAdmin();
+        editingCategoryName = name;
+        $('manageCategory').value = name;
+        toast('Категория обновлена');
+      }
+      return;
+    }
+
+    // Добавление новой
+    if (categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+      return toast('Такая категория уже есть');
+    }
+    categories.push({ name, image });
+    if (await persist()) {
+      renderMain(); renderAdmin();
+      $('fCategory').value = name;
+      $('manageCategory').value = name;
+      editingCategoryName = name;
+      toast('Категория добавлена');
+    }
   });
 
-  $('renameCategoryBtn').addEventListener('click', async () => {
-    if (!isAdmin) return;
-    const oldName = $('manageCategory').value;
-    const newName = $('newCategoryName').value.trim();
-    if (!oldName || !newName) return toast('Выбери категорию и введи новое название');
-    if (categories.some(c => c.toLowerCase() === newName.toLowerCase())) return toast('Такая категория уже есть');
-    categories = categories.map(c => c === oldName ? newName : c);
-    products = products.map(p => p.category === oldName ? {...p, category:newName} : p);
-    $('newCategoryName').value = '';
-    if (await persist()) { renderMain(); renderAdmin(); toast('Категория переименована'); }
+  $('resetCategoryBtn').addEventListener('click', () => {
+    clearCategoryForm();
+    toast('Поля категории очищены');
   });
 
   $('deleteCategoryBtn').addEventListener('click', async () => {
     if (!isAdmin) return;
-    const name = $('manageCategory').value;
-    if (!name) return;
-    if (products.some(p => p.category === name)) return toast('Сначала удали товары этой категории');
+    const name = editingCategoryName || $('manageCategory').value;
+    if (!name) return toast('Выбери категорию');
+    if (products.some(p => p.category === name)) {
+      return toast('Сначала удали товары этой категории');
+    }
     if (!confirm(`Удалить категорию «${name}»?`)) return;
-    categories = categories.filter(c => c !== name);
-    if (await persist()) { renderMain(); renderAdmin(); toast('Категория удалена'); }
+    categories = categories.filter(c => c.name !== name);
+    if (await persist()) {
+      clearCategoryForm();
+      renderMain(); renderAdmin();
+      toast('Категория удалена');
+    }
   });
 
+  // Save product
   $('saveProduct').addEventListener('click', async () => {
     if (!isAdmin) return;
     const title = $('fTitle').value.trim();
@@ -1000,14 +1170,8 @@ body[data-theme="white"] {
     if (file) {
       if (!file.type.startsWith('image/')) return toast('Выбери файл изображения');
       if (file.size > 2 * 1024 * 1024) return toast('Фото больше 2 МБ');
-      try {
-        image = await new Promise((resolve, reject) => {
-          const r = new FileReader();
-          r.onload = () => resolve(r.result);
-          r.onerror = reject;
-          r.readAsDataURL(file);
-        });
-      } catch { return toast('Не удалось прочитать изображение'); }
+      try { image = await readFileAsDataURL(file); }
+      catch { return toast('Не удалось прочитать изображение'); }
     }
 
     const product = {
@@ -1051,7 +1215,7 @@ body[data-theme="white"] {
     }
   });
 
-  // OVERLAY CLOSE
+  // Overlay close
   document.querySelectorAll('[data-close]').forEach(b => {
     b.addEventListener('click', () => $(b.dataset.close).classList.remove('show'));
   });
@@ -1061,7 +1225,7 @@ body[data-theme="white"] {
     });
   });
 
-  // SUBSCRIPTION
+  // Subscription
   async function checkSubscription() {
     const note = $('gateNote');
     const initData = tg?.initData || '';
