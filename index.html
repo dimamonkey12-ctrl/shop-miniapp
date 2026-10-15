@@ -46,6 +46,7 @@ header {
 }
 .brand { display:flex; align-items:center; gap:12px }
 .key-logo { width:43px; height:43px; flex-shrink:0; transform-origin:50% 50%; }
+.key-logo.playing { animation:keyBounce .9s cubic-bezier(.6,.05,.4,.95); }
 .brand-title { font-size:25px; font-weight:800; letter-spacing:.18em }
 .brand-sub { font-size:10px; color:var(--muted); letter-spacing:.2em; margin-top:5px }
 .header-actions { display:flex; gap:8px; flex-wrap:wrap }
@@ -55,10 +56,7 @@ header {
   font-size:12px; font-weight:700; transition:.2s;
 }
 .btn:hover { border-color:var(--gold2); transform:translateY(-1px) }
-.btn.gold {
-  background:linear-gradient(135deg,var(--gold2),var(--gold));
-  color:#171209; border-color:transparent;
-}
+.btn.gold { background:linear-gradient(135deg,var(--gold2),var(--gold)); color:#171209; border-color:transparent; }
 .btn.danger { color:#e58b8b }
 .btn.theme-btn { min-width:160px; text-align:center }
 
@@ -94,10 +92,7 @@ header {
   background:radial-gradient(circle,rgba(176,136,66,.16),transparent 70%);
   pointer-events:none;
 }
-.cat-card-img {
-  width:64px; height:64px; border-radius:16px; object-fit:cover;
-  border:1px solid var(--line); background:var(--panel2);
-}
+.cat-card-img { width:64px; height:64px; border-radius:16px; object-fit:cover; border:1px solid var(--line); background:var(--panel2); }
 .cat-card-icon { font-size:22px; color:var(--gold2); height:64px; line-height:64px }
 .cat-card-title { font-size:17px; font-weight:800; letter-spacing:.02em; position:relative; z-index:1 }
 .cat-card-count { font-size:11px; color:var(--muted); position:relative; z-index:1 }
@@ -129,16 +124,8 @@ header {
 .product-bottom { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:17px }
 .price { font-size:15px; font-weight:800 }
 .status { font-size:9px; color:var(--muted); border:1px solid var(--line); border-radius:99px; padding:6px 8px }
-.empty {
-  grid-column:1/-1; padding:50px 20px; text-align:center;
-  border:1px dashed var(--line); border-radius:18px;
-  color:var(--muted); line-height:1.8;
-}
-footer {
-  margin-top:35px; padding:18px 0; border-top:1px solid var(--line);
-  display:flex; justify-content:space-between; gap:12px;
-  color:var(--muted); font-size:11px;
-}
+.empty { grid-column:1/-1; padding:50px 20px; text-align:center; border:1px dashed var(--line); border-radius:18px; color:var(--muted); line-height:1.8; }
+footer { margin-top:35px; padding:18px 0; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; color:var(--muted); font-size:11px; }
 .back-btn {
   display:inline-flex; align-items:center; gap:6px;
   background:transparent; border:1px solid var(--line);
@@ -178,10 +165,7 @@ footer {
   transition:.2s;
 }
 .nav-button svg { width:18px; height:18px; flex-shrink:0 }
-.nav-button.active {
-  background:linear-gradient(135deg,var(--gold2),var(--gold));
-  color:#171209;
-}
+.nav-button.active { background:linear-gradient(135deg,var(--gold2),var(--gold)); color:#171209; }
 .overlay {
   position:fixed; inset:0; z-index:30; display:none;
   align-items:center; justify-content:center;
@@ -205,10 +189,7 @@ footer {
 .field textarea { min-height:85px; resize:vertical }
 .field input[type=file] { padding:9px }
 .two-fields { display:grid; grid-template-columns:1fr 1fr; gap:10px }
-.subheading {
-  font-size:13px; margin:23px 0 10px;
-  padding-bottom:8px; border-bottom:1px solid var(--line);
-}
+.subheading { font-size:13px; margin:23px 0 10px; padding-bottom:8px; border-bottom:1px solid var(--line); }
 .small-note { color:var(--muted); font-size:10px; line-height:1.5 }
 .admin-list { display:grid; gap:8px }
 .admin-row {
@@ -217,10 +198,11 @@ footer {
   font-size:12px;
 }
 .admin-row .row-buttons { display:flex; gap:5px; flex-shrink:0 }
-.img-preview {
-  max-width:100%; max-height:180px; border-radius:12px;
-  border:1px solid var(--line); margin-top:8px; display:block;
+.admin-row img.cat-thumb {
+  width:36px; height:36px; border-radius:10px; object-fit:cover;
+  border:1px solid var(--line); margin-right:8px; vertical-align:middle;
 }
+.img-preview { max-width:100%; max-height:180px; border-radius:12px; border:1px solid var(--line); margin-top:8px; display:block; }
 .cat-help {
   font-size:11px; color:var(--muted); margin-top:-4px; margin-bottom:6px;
   padding:8px 12px; border-left:2px solid var(--gold2);
@@ -232,17 +214,11 @@ footer {
   text-align:center; padding:24px; transition:opacity .6s,visibility .6s;
 }
 #splash.done { opacity:0; visibility:hidden; pointer-events:none }
-.splash-logo {
-  width:76px; height:76px;
-  animation:keyBounce 1.3s cubic-bezier(.6,.05,.4,.95) infinite;
-}
+.splash-logo { width:76px; height:76px; animation:keyBounce 1.3s cubic-bezier(.6,.05,.4,.95) infinite; }
 .splash-title { font-size:29px; font-weight:800; letter-spacing:.24em; margin-top:17px }
 .splash-status { font-size:11px; color:#8f8a80; margin-top:24px; min-height:18px }
 .loader { height:2px; background:#ffffff14; margin:18px auto; max-width:220px; overflow:hidden }
-.loader:after {
-  content:""; display:block; width:38%; height:100%; background:var(--gold2);
-  animation:load 1.4s ease-in-out infinite;
-}
+.loader:after { content:""; display:block; width:38%; height:100%; background:var(--gold2); animation:load 1.4s ease-in-out infinite; }
 @keyframes load { from{transform:translateX(-120%)} to{transform:translateX(380%)} }
 .gate { text-align:center; max-width:520px }
 .gate h2 { font-size:28px; margin:15px 0 8px }
@@ -257,7 +233,6 @@ footer {
 }
 .toast.show { opacity:1; transform:translate(-50%,0) }
 
-/* ТЕМЫ */
 body[data-theme="dark"]     { --bg:#0a0a0c; --panel:#14141a; --panel2:#1a1a22; --text:#e8e4dc; --muted:#8f8a80; --line:#2a2a32; --gold:#7a5c2e; --gold2:#b08842; }
 body[data-theme="midnight"] { --bg:#080a14; --panel:#0f1322; --panel2:#151a2c; --text:#e6e8f0; --muted:#8a8fa3; --line:#242a42; --gold:#4a5a9c; --gold2:#7888c8; }
 body[data-theme="forest"]   { --bg:#0a0f0b; --panel:#121912; --panel2:#18221a; --text:#e0e8dd; --muted:#889182; --line:#25301f; --gold:#3f6b3a; --gold2:#6fa05f; }
@@ -290,12 +265,10 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
 </head>
 <body data-theme="dark">
 
-<!-- SPLASH -->
 <div id="splash">
   <div>
     <svg class="splash-logo" viewBox="0 0 100 100" fill="none">
-      <path d="M62 18a22 22 0 1 0 18 35L93 66l-8 8-6-6-6 6-8-8 7-7a22 22 0 0 0-10-41Z"
-        stroke="#b08842" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M62 18a22 22 0 1 0 18 35L93 66l-8 8-6-6-6 6-8-8 7-7a22 22 0 0 0-10-41Z" stroke="#b08842" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
       <circle cx="41" cy="40" r="7" stroke="#7a5c2e" stroke-width="4"/>
     </svg>
     <div class="splash-title">DESTORE</div>
@@ -304,13 +277,11 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   </div>
 </div>
 
-<!-- APP -->
 <div class="app" id="app" aria-hidden="true">
   <header>
     <div class="brand">
       <svg class="key-logo" id="keyLogo" viewBox="0 0 100 100" fill="none">
-        <path d="M62 18a22 22 0 1 0 18 35L93 66l-8 8-6-6-6 6-8-8 7-7a22 22 0 0 0-10-41Z"
-          stroke="var(--gold2)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M62 18a22 22 0 1 0 18 35L93 66l-8 8-6-6-6 6-8-8 7-7a22 22 0 0 0-10-41Z" stroke="var(--gold2)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="41" cy="40" r="7" stroke="var(--gold)" stroke-width="4"/>
       </svg>
       <div>
@@ -324,22 +295,18 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     </div>
   </header>
 
-  <!-- MAIN -->
   <section class="screen active" id="screenMain">
     <div class="hero">
       <div class="eyebrow">Selected for you · 2026</div>
       <h1>Меньше шума.<br><em>Больше выбора.</em></h1>
       <p>Каталог цифровых товаров, подписок и услуг. Выбирай категорию и переходи к оформлению в Telegram.</p>
     </div>
-    <div class="search-wrap">
-      <input class="search" id="search" placeholder="Поиск по каталогу…">
-    </div>
+    <div class="search-wrap"><input class="search" id="search" placeholder="Поиск по каталогу…"></div>
     <div class="section-title">Категории</div>
     <div class="cat-grid" id="catGrid"></div>
     <div class="grid" id="searchResults" style="margin-top:14px"></div>
   </section>
 
-  <!-- CATEGORY -->
   <section class="screen" id="screenCategory">
     <button class="back-btn" id="backFromCategory">← Назад</button>
     <div class="hero" style="padding:6px 0 0">
@@ -349,7 +316,6 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     <section class="grid" id="productsGrid" style="margin-top:18px"></section>
   </section>
 
-  <!-- ABOUT -->
   <section class="screen" id="screenAbout">
     <button class="back-btn" id="backFromAbout">← Назад</button>
     <div class="hero" style="padding:6px 0 0">
@@ -366,7 +332,6 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     </div>
   </section>
 
-  <!-- INFO -->
   <section class="screen" id="screenInfo">
     <button class="back-btn" id="backFromInfo">← Назад</button>
     <div class="hero" style="padding:6px 0 0">
@@ -383,7 +348,6 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   </footer>
 </div>
 
-<!-- NAV -->
 <nav class="bottom-nav" id="bottomNav">
   <button class="nav-button active" id="mainNav">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -401,7 +365,6 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   </button>
 </nav>
 
-<!-- GATE -->
 <div class="overlay" id="gateOverlay">
   <div class="modal gate">
     <h2>Сначала подпишись</h2>
@@ -414,7 +377,6 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   </div>
 </div>
 
-<!-- PRODUCT -->
 <div class="overlay" id="productOverlay">
   <div class="modal">
     <img id="detailImage" class="img-preview" style="display:none;width:100%;max-height:280px;object-fit:cover;margin-bottom:14px" alt="">
@@ -431,22 +393,18 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   </div>
 </div>
 
-<!-- ADMIN -->
 <div class="overlay" id="adminOverlay">
   <div class="modal">
     <h2>Управление каталогом</h2>
-    <p>Создавай категории с аватарками, потом добавляй товары внутрь категорий. Фото — с компьютера (до 2 МБ) или ссылкой.</p>
 
     <h3 class="subheading" id="catFormHeading">➕ Новая категория</h3>
     <div class="cat-help" id="catHelp">Заполни название и нажми «Добавить категорию».</div>
-
     <div class="field">
       <label>Что делаем?</label>
       <select id="manageCategory">
         <option value="">— создать новую категорию —</option>
       </select>
     </div>
-
     <div class="field">
       <label>Название категории</label>
       <input id="newCategoryName" placeholder="Например, Игры">
@@ -470,6 +428,9 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
       <button class="btn danger" id="deleteCategoryBtn" style="display:none">Удалить категорию</button>
     </div>
 
+    <h3 class="subheading">Категории каталога</h3>
+    <div class="admin-list" id="adminCatList"></div>
+
     <h3 class="subheading" id="formHeading">Добавить товар</h3>
     <div class="field">
       <label>Название товара</label>
@@ -480,14 +441,8 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
       <select id="fCategory"></select>
     </div>
     <div class="two-fields">
-      <div class="field">
-        <label>Цена в долларах ($)</label>
-        <input id="fPriceUSD" type="number" min="0" step="0.01" placeholder="9.99">
-      </div>
-      <div class="field">
-        <label>Цена в рублях (₽)</label>
-        <input id="fPriceRUB" type="number" min="0" step="1" placeholder="990">
-      </div>
+      <div class="field"><label>Цена в долларах ($)</label><input id="fPriceUSD" type="number" min="0" step="0.01" placeholder="9.99"></div>
+      <div class="field"><label>Цена в рублях (₽)</label><input id="fPriceRUB" type="number" min="0" step="1" placeholder="990"></div>
     </div>
     <div class="field">
       <label>Статус товара</label>
@@ -497,27 +452,18 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
         <option value="out">Нет в наличии</option>
       </select>
     </div>
-    <div class="field">
-      <label>Описание</label>
-      <textarea id="fDescription" placeholder="Описание товара"></textarea>
-    </div>
+    <div class="field"><label>Описание</label><textarea id="fDescription" placeholder="Описание товара"></textarea></div>
     <div class="field">
       <label>Фото с компьютера</label>
       <input id="fImageFile" type="file" accept="image/*">
       <div class="small-note">Размер файла — до 2 МБ. Будет сохранено как data URL.</div>
     </div>
-    <div class="field">
-      <label>Или ссылка на фото</label>
-      <input id="fImageURL" type="url" placeholder="https://…">
-    </div>
+    <div class="field"><label>Или ссылка на фото</label><input id="fImageURL" type="url" placeholder="https://…"></div>
     <div class="field" id="imagePreviewField" style="display:none">
       <label>Предпросмотр фото</label>
       <img id="imagePreview" class="img-preview" alt="">
     </div>
-    <div class="field">
-      <label>Ссылка для оформления</label>
-      <input id="fLink" placeholder="https://t.me/…">
-    </div>
+    <div class="field"><label>Ссылка для оформления</label><input id="fLink" placeholder="https://t.me/…"></div>
 
     <div class="modal-actions">
       <button class="btn gold" id="saveProduct">Добавить товар</button>
@@ -542,7 +488,7 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   const CONTACT_URL   = 'https://t.me/desiresceo';
   const AGREEMENT_URL = 'https://telegra.ph/fdf-10-15';
 
-  const THEME_KEY = 'destore-theme-v9';
+  const THEME_KEY = 'destore-theme-v10';
   const themes = ['dark','midnight','forest','sand','rose'];
   const ADMIN_IDS = [7535464331, 8404412552];
 
@@ -559,11 +505,9 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   const isAdmin = !!(tgUser && ADMIN_IDS.includes(Number(tgUser.id)));
   if (isAdmin) $('adminBtn').style.display = '';
 
-  // ---------- Helpers ----------
+  // ---------- helpers ----------
   function esc(v='') {
-    return String(v).replace(/[&<>"']/g, c => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[c]));
+    return String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
   let toastTimer;
   function toast(msg) {
@@ -599,21 +543,30 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     return out;
   }
   function categoryByName(name) { return categories.find(c => c.name === name); }
+  const clone = o => JSON.parse(JSON.stringify(o));
 
-  // ---------- KEY ANIMATION (reliable) ----------
+  // ---------- key animation (reliable, plays every click) ----------
   const keyLogo = $('keyLogo');
-  let keyAnimTimer = null;
   function playKeyAnim() {
     if (!keyLogo) return;
-    keyLogo.style.animation = 'none';
-    void keyLogo.offsetWidth;
-    keyLogo.style.animation = 'keyBounce .9s cubic-bezier(.6,.05,.4,.95)';
-    clearTimeout(keyAnimTimer);
-    keyAnimTimer = setTimeout(() => { keyLogo.style.animation = ''; }, 950);
+    // снимаем класс, форсируем reflow, вешаем класс заново
+    keyLogo.classList.remove('playing');
+    void keyLogo.getBoundingClientRect().width;
+    keyLogo.classList.add('playing');
   }
-  // Слушаем клики по любым кнопкам (в фазе capture, чтобы успеть до re-render)
+  // когда анимация завершилась — снимаем класс, чтобы можно было запустить снова
+  keyLogo.addEventListener('animationend', () => {
+    keyLogo.classList.remove('playing');
+  });
+  // ловим клик по любой кнопке
   document.addEventListener('pointerdown', e => {
     if (e.target.closest('button, .nav-button, .btn')) playKeyAnim();
+  }, true);
+  document.addEventListener('click', e => {
+    if (e.target.closest('button, .nav-button, .btn')) {
+      // на всякий случай ещё раз (для устройств, где pointerdown не сработал)
+      if (!keyLogo.classList.contains('playing')) playKeyAnim();
+    }
   }, true);
 
   // ---------- THEME ----------
@@ -635,7 +588,6 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     toast('Тема переключена');
   });
 
-  // ---------- SCREENS ----------
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(id)?.classList.add('active');
@@ -664,9 +616,20 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     if (!res.ok) throw new Error(data.error || 'Не удалось сохранить');
     return data;
   }
-  async function persist() {
-    try { await saveCatalog(); return true; }
-    catch (e) { toast(e.message || 'Ошибка сохранения'); return false; }
+  // Применяем изменение локально, сохраняем. Если ошибка — откатываем.
+  async function applyAndSave(mutator) {
+    const prevCats = clone(categories);
+    const prevProds = clone(products);
+    mutator();
+    try {
+      await saveCatalog();
+      return true;
+    } catch (e) {
+      categories = prevCats;
+      products = prevProds;
+      toast(e.message || 'Ошибка сохранения');
+      return false;
+    }
   }
   async function readFileAsDataURL(file) {
     return new Promise((resolve, reject) => {
@@ -677,7 +640,7 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     });
   }
 
-  // ---------- RENDER ----------
+  // ---------- render ----------
   function renderMain() {
     const query = ($('search').value || '').trim().toLowerCase();
     if (query) {
@@ -723,9 +686,7 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     return `
       <article class="product">
         <div class="product-image">
-          ${p.image
-            ? `<img src="${esc(p.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`
-            : '<span class="placeholder">✦</span>'}
+          ${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" onerror="this.style.display='none'">` : '<span class="placeholder">✦</span>'}
         </div>
         <div class="product-body">
           <div class="product-category">${esc(p.category || 'Каталог')}</div>
@@ -746,9 +707,13 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     $('productsGrid').innerHTML = list.length ? list.map(productCard).join('')
       : '<div class="empty">В этой категории пока нет товаров.</div>';
   }
+
   function renderAdmin() {
+    // select для товаров
     const opts = categories.map(c => `<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('');
     $('fCategory').innerHTML = opts || '<option value="">Сначала создай категорию</option>';
+
+    // select для управления категориями
     $('manageCategory').innerHTML =
       '<option value="">— создать новую категорию —</option>' +
       categories.map(c => `<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('');
@@ -758,13 +723,38 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
       editingCategoryName = null;
       $('manageCategory').value = '';
     }
-    // Кнопки и заголовок
     updateCategoryUI();
 
+    // список категорий
+    $('adminCatList').innerHTML = categories.length
+      ? categories.map(c => {
+          const count = products.filter(p => p.category === c.name).length;
+          const thumb = c.image
+            ? `<img class="cat-thumb" src="${esc(c.image)}" alt="" onerror="this.style.display='none'">`
+            : '';
+          return `
+            <div class="admin-row">
+              <span style="display:flex;align-items:center;min-width:0">
+                ${thumb}
+                <span style="min-width:0">
+                  <b>${esc(c.name)}</b><br>
+                  <small style="color:var(--muted)">${count} ${plural(count,'товар','товара','товаров')}</small>
+                </span>
+              </span>
+              <span class="row-buttons">
+                <button class="btn" data-edit-cat="${esc(c.name)}">Изменить</button>
+                <button class="btn danger" data-del-cat="${esc(c.name)}">×</button>
+              </span>
+            </div>`;
+        }).join('')
+      : '<p>Категорий пока нет.</p>';
+
+    // список товаров
     $('adminList').innerHTML = products.length
       ? products.map(p => `
         <div class="admin-row">
-          <span><b>${esc(p.title)}</b><br>
+          <span>
+            <b>${esc(p.title)}</b><br>
             <small style="color:var(--muted)">${esc(p.category)} · ${esc(price(p))}</small>
           </span>
           <span class="row-buttons">
@@ -774,6 +764,7 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
         </div>`).join('')
       : '<p>Товаров пока нет.</p>';
   }
+
   function updateCategoryUI() {
     if (editingCategoryName) {
       $('catFormHeading').textContent = '✎ Редактирование: ' + editingCategoryName;
@@ -788,7 +779,7 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     }
   }
 
-  // ---------- PRODUCT FORM ----------
+  // ---------- product form ----------
   function clearForm() {
     editingId = null;
     ['fTitle','fPriceUSD','fPriceRUB','fDescription','fImageURL','fLink'].forEach(id => $(id).value = '');
@@ -813,6 +804,8 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     $('formHeading').textContent = 'Редактировать товар';
     $('saveProduct').textContent = 'Сохранить изменения';
     updateImagePreview(p.image || '');
+    // прокрутим к форме товара
+    $('formHeading').scrollIntoView({behavior:'smooth', block:'start'});
   }
   function updateImagePreview(overrideUrl) {
     const url = overrideUrl ?? $('fImageURL').value.trim();
@@ -832,7 +825,7 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   }
   function showPreview(imgEl, wrapEl, src) { imgEl.src = src; wrapEl.style.display = ''; }
 
-  // ---------- CATEGORY FORM ----------
+  // ---------- category form ----------
   function clearCategoryForm() {
     editingCategoryName = null;
     $('newCategoryName').value = '';
@@ -852,6 +845,7 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     if (cat.image) showPreview($('categoryPreview'), $('categoryPreviewWrap'), cat.image);
     else $('categoryPreviewWrap').style.display = 'none';
     updateCategoryUI();
+    $('catFormHeading').scrollIntoView({behavior:'smooth', block:'start'});
   }
   function updateCategoryPreview() {
     const file = $('newCategoryImageFile').files?.[0];
@@ -870,7 +864,7 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     $('categoryPreviewWrap').style.display = 'none';
   }
 
-  // ---------- EVENTS ----------
+  // ---------- events ----------
   $('search').addEventListener('input', renderMain);
   $('catGrid').addEventListener('click', e => {
     if (e.target.closest('#aboutCardMain')) { showScreen('screenAbout'); return; }
@@ -882,7 +876,6 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   });
   $('productsGrid').addEventListener('click', onProductClick);
   $('searchResults').addEventListener('click', onProductClick);
-
   function onProductClick(e) {
     const btn = e.target.closest('[data-product]');
     if (!btn) return;
@@ -918,8 +911,7 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     if (!map) return;
     $('infoTitle').textContent = map[0];
     $('infoText').textContent = map[1];
-    $('infoActions').innerHTML = map[2].map(a =>
-      `<button class="btn gold" data-url="${esc(a.url)}">${esc(a.label)}</button>`).join('');
+    $('infoActions').innerHTML = map[2].map(a => `<button class="btn gold" data-url="${esc(a.url)}">${esc(a.label)}</button>`).join('');
     showScreen('screenInfo');
   }
   $('infoActions').addEventListener('click', e => {
@@ -938,16 +930,16 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
   $('clearFormBtn').addEventListener('click', () => { clearForm(); toast('Поля очищены'); });
   $('fImageURL').addEventListener('input', () => updateImagePreview());
   $('fImageFile').addEventListener('change', () => updateImagePreview());
+  $('newCategoryImage').addEventListener('input', updateCategoryPreview);
+  $('newCategoryImageFile').addEventListener('change', updateCategoryPreview);
 
   $('manageCategory').addEventListener('change', () => {
     const name = $('manageCategory').value;
     if (!name) clearCategoryForm();
     else fillCategoryForm(name);
   });
-  $('newCategoryImage').addEventListener('input', updateCategoryPreview);
-  $('newCategoryImageFile').addEventListener('change', updateCategoryPreview);
 
-  // SAVE / ADD категория
+  // SAVE CATEGORY (add or edit) — с откатом
   $('saveCategoryBtn').addEventListener('click', async () => {
     if (!isAdmin) return;
     const name = $('newCategoryName').value.trim();
@@ -963,35 +955,39 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     }
 
     if (editingCategoryName) {
-      // Редактирование
       const oldName = editingCategoryName;
+      // проверки до мутации
       if (oldName !== name && categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
         return toast('Такая категория уже есть');
       }
       const oldCat = categoryByName(oldName);
       const imageToUse = newImage || oldCat?.image || '';
 
-      categories = categories.map(c => c.name === oldName ? { name, image:imageToUse } : c);
-      if (oldName !== name) {
-        products = products.map(p => p.category === oldName ? {...p, category:name} : p);
-        if (activeCategory === oldName) activeCategory = name;
-      }
-      if (await persist()) {
-        renderMain(); renderAdmin();
+      const ok = await applyAndSave(() => {
+        categories = categories.map(c => c.name === oldName ? { name, image:imageToUse } : c);
+        if (oldName !== name) {
+          products = products.map(p => p.category === oldName ? {...p, category:name} : p);
+          if (activeCategory === oldName) activeCategory = name;
+        }
+      });
+
+      if (ok) {
         editingCategoryName = name;
+        renderMain(); renderAdmin();
         $('manageCategory').value = name;
         updateCategoryUI();
-        toast('Категория обновлена');
+        toast('Категория обновлена ✓');
       }
     } else {
-      // Добавление
       if (categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
         return toast('Такая категория уже есть');
       }
-      categories.push({ name, image:newImage });
-      if (await persist()) {
-        renderMain(); renderAdmin();
+      const ok = await applyAndSave(() => {
+        categories.push({ name, image:newImage });
+      });
+      if (ok) {
         clearCategoryForm();
+        renderMain(); renderAdmin();
         toast('Категория добавлена ✓');
       }
     }
@@ -1008,15 +1004,38 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     if (!name) return toast('Выбери категорию');
     if (products.some(p => p.category === name)) return toast('Сначала удали товары этой категории');
     if (!confirm(`Удалить категорию «${name}»?`)) return;
-    categories = categories.filter(c => c.name !== name);
-    if (await persist()) {
+    const ok = await applyAndSave(() => {
+      categories = categories.filter(c => c.name !== name);
+    });
+    if (ok) {
       clearCategoryForm();
       renderMain(); renderAdmin();
       toast('Категория удалена');
     }
   });
 
-  // SAVE товар
+  // список категорий — кнопки редактирования/удаления
+  $('adminCatList').addEventListener('click', async e => {
+    const edit = e.target.closest('[data-edit-cat]');
+    const del  = e.target.closest('[data-del-cat]');
+    if (edit) { fillCategoryForm(edit.dataset.editCat); }
+    if (del) {
+      if (!isAdmin) return;
+      const name = del.dataset.delCat;
+      if (products.some(p => p.category === name)) return toast('Сначала удали товары этой категории');
+      if (!confirm(`Удалить категорию «${name}»?`)) return;
+      const ok = await applyAndSave(() => {
+        categories = categories.filter(c => c.name !== name);
+      });
+      if (ok) {
+        if (editingCategoryName === name) clearCategoryForm();
+        renderMain(); renderAdmin();
+        toast('Категория удалена');
+      }
+    }
+  });
+
+  // SAVE PRODUCT
   $('saveProduct').addEventListener('click', async () => {
     if (!isAdmin) return;
     const title = $('fTitle').value.trim();
@@ -1035,27 +1054,28 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
       catch { return toast('Не удалось прочитать изображение'); }
     }
 
+    const id = editingId || ('p' + Date.now());
     const product = {
-      id: editingId || ('p' + Date.now()),
-      title, category, usd, rub,
+      id, title, category, usd, rub,
       status: $('fStatus').value,
       description: $('fDescription').value.trim(),
       image,
       link: $('fLink').value.trim() || CONTACT_URL
     };
+    const oldProduct = editingId ? products.find(p => p.id === editingId) : null;
+    if (!file && !image && oldProduct?.image) product.image = oldProduct.image;
 
-    if (editingId) {
-      const old = products.find(p => p.id === editingId);
-      if (!file && !image && old?.image) product.image = old.image;
-      products = products.map(p => p.id === editingId ? product : p);
-    } else {
-      products.unshift(product);
-    }
+    const ok = await applyAndSave(() => {
+      if (editingId) {
+        products = products.map(p => p.id === editingId ? product : p);
+      } else {
+        products.unshift(product);
+      }
+    });
 
-    if (await persist()) {
+    if (ok) {
       clearForm();
-      renderAdmin();
-      renderMain();
+      renderAdmin(); renderMain();
       if (activeCategory) renderCategory(activeCategory);
       toast('Товар сохранён ✓');
     }
@@ -1071,8 +1091,11 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
     if (del) {
       if (!isAdmin) return;
       if (!confirm('Удалить этот товар?')) return;
-      products = products.filter(p => p.id !== del.dataset.delete);
-      if (await persist()) { renderAdmin(); renderMain(); toast('Товар удалён'); }
+      const id = del.dataset.delete;
+      const ok = await applyAndSave(() => {
+        products = products.filter(p => p.id !== id);
+      });
+      if (ok) { renderAdmin(); renderMain(); toast('Товар удалён'); }
     }
   });
 
@@ -1135,16 +1158,13 @@ body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6;
       $('splashStatus').textContent = messages[Math.min(i, messages.length - 1)];
       if (i >= messages.length - 1) clearInterval(interval);
     }, 450);
-
     const splashPromise = new Promise(r => setTimeout(r, 1600));
     const catalogPromise = loadCatalog().catch(err => console.error(err));
     await splashPromise;
     await catalogPromise;
-
     $('splash').classList.add('done');
     $('app').setAttribute('aria-hidden', 'false');
     renderMain();
-
     $('gateOverlay').classList.add('show');
     if (tg?.initData) {
       const ok = await checkSubscription();
