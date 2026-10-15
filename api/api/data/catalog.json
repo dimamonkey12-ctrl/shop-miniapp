@@ -1,5 +1,66 @@
-
 {
-  "categories": [],
-  "products": []
+  "categories": [
+    {
+      "name": "Подписки",
+      "image": ""
+    },
+    {
+      "name": "Личные услуги",
+      "image": ""
+    },
+    {
+      "name": "Игры",
+      "image": ""
+    },
+    {
+      "name": "Аккаунты",
+      "image": ""
+    }
+  ],
+  "products": [
+    {
+      "id": "p1700000000001",
+      "title": "Подписка Premium",
+      "category": "Подписки",
+      "usd": "9.99",
+      "rub": "990",
+      "status": "buy",
+      "description": "Актуальная подписка Premium на 1 месяц. Оплата и активация через Telegram.",
+      "image": "",
+      "link": "https://t.me/desiresceo"
+    },
+    {
+      "id": "p1700000000002",
+      "title": "Подписка Standart",
+      "category": "Подписки",
+      "usd": "4.99",
+      "rub": "490",
+      "status": "buy",
+      "description": "Базовая подписка на 1 месяц. Подходит для повседневного использования.",
+      "image": "",
+      "link": "https://t.me/desiresceo"
+    },
+    {
+      "id": "p1700000000003",
+      "title": "Персональная консультация",
+      "category": "Личные услуги",
+      "usd": "",
+      "rub": "",
+      "status": "ask",
+      "description": "Напиши нам, чтобы уточнить детали и доступность услуги. Стоимость обсуждается индивидуально.",
+      "image": "",
+      "link": "https://t.me/desiresceo"
+    },
+    {
+      "id": "p1700000000004",
+      "title": "Игровой аккаунт (пример)",
+      "category": "Игры",
+      "usd": "19.99",
+      "rub": "1990",
+      "status": "buy",
+      "description": "Пример товара. Замени описание на своё. Все данные уточняются перед оформлением.",
+      "image": "",
+      "link": "https://t.me/desiresceo"
+    }
+  ]
 }
