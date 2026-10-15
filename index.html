@@ -8,47 +8,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#0a0a0c;
-  --panel:#14141a;
-  --panel2:#1a1a22;
-  --text:#e8e4dc;
-  --muted:#8f8a80;
-  --line:#2a2a32;
-  --gold:#7a5c2e;
-  --gold2:#b08842;
+  --bg:#0a0a0c; --panel:#14141a; --panel2:#1a1a22;
+  --text:#e8e4dc; --muted:#8f8a80; --line:#2a2a32;
+  --gold:#7a5c2e; --gold2:#b08842;
 }
 * { box-sizing:border-box }
 html, body { margin:0; padding:0; }
 body {
-  background:var(--bg);
-  color:var(--text);
+  background:var(--bg); color:var(--text);
   font-family:Manrope,Arial,sans-serif;
-  min-height:100vh;
-  transition:background .35s,color .35s;
+  min-height:100vh; transition:background .35s,color .35s;
   overflow-x:hidden;
 }
 body::before {
-  content:"";
-  position:fixed;
-  inset:-25%;
-  z-index:-2;
-  pointer-events:none;
+  content:""; position:fixed; inset:-25%; z-index:-2; pointer-events:none;
   background:
     radial-gradient(ellipse at 20% 15%,rgba(176,136,66,.14),transparent 45%),
     radial-gradient(ellipse at 80% 75%,rgba(122,92,46,.12),transparent 45%),
     radial-gradient(ellipse at 50% 50%,rgba(80,60,30,.08),transparent 60%);
   animation:bgDrift 22s ease-in-out infinite alternate;
 }
-@keyframes bgDrift {
-  0% { transform:translate(0,0) scale(1) }
-  100% { transform:translate(3%,-2%) scale(1.1) }
-}
-@keyframes appear {
-  from { opacity:0; transform:translateY(8px) }
-  to { opacity:1; transform:translateY(0) }
-}
+@keyframes bgDrift { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(3%,-2%) scale(1.1)} }
+@keyframes appear { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 @keyframes keyBounce {
-  0%, 100% { transform:translateY(0) rotate(0deg); }
+  0%,100% { transform:translateY(0) rotate(0); }
   50% { transform:translateY(-14px) rotate(-6deg); }
 }
 button,input,textarea,select { font:inherit }
@@ -56,19 +39,13 @@ button { cursor:pointer }
 button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible {
   outline:2px solid var(--gold2); outline-offset:2px;
 }
-.app {
-  max-width:1120px;
-  margin:auto;
-  padding:20px 20px 115px;
-  position:relative;
-}
+.app { max-width:1120px; margin:auto; padding:20px 20px 115px; position:relative; }
 header {
   display:flex; align-items:center; justify-content:space-between;
   gap:12px; padding:12px 0 24px; border-bottom:1px solid var(--line);
 }
 .brand { display:flex; align-items:center; gap:12px }
-.key-logo { width:43px; height:43px; flex-shrink:0 }
-.key-logo.playing { animation:keyBounce .9s cubic-bezier(.6,.05,.4,.95) }
+.key-logo { width:43px; height:43px; flex-shrink:0; transform-origin:50% 50%; }
 .brand-title { font-size:25px; font-weight:800; letter-spacing:.18em }
 .brand-sub { font-size:10px; color:var(--muted); letter-spacing:.2em; margin-top:5px }
 .header-actions { display:flex; gap:8px; flex-wrap:wrap }
@@ -89,38 +66,26 @@ header {
 .screen.active { display:block }
 .eyebrow { color:var(--gold2); font-size:10px; letter-spacing:.24em; font-weight:800 }
 .hero { padding:28px 0 20px }
-.hero h1 {
-  font-size:clamp(32px,5.5vw,56px);
-  line-height:1.05; letter-spacing:-.04em; margin:12px 0;
-}
+.hero h1 { font-size:clamp(32px,5.5vw,56px); line-height:1.05; letter-spacing:-.04em; margin:12px 0; }
 .hero h1 em { color:var(--gold2); font-weight:400; font-style:normal }
 .hero p { color:var(--muted); font-size:14px; line-height:1.7; max-width:600px }
 .section-title {
   font-size:12px; letter-spacing:.22em; text-transform:uppercase;
   color:var(--muted); font-weight:800;
-  margin:24px 0 14px; padding-bottom:10px;
-  border-bottom:1px solid var(--line);
+  margin:24px 0 14px; padding-bottom:10px; border-bottom:1px solid var(--line);
 }
-
 .search-wrap { margin:16px 0 4px }
 .search {
   width:100%; border:1px solid var(--line); border-radius:14px;
-  padding:13px 15px; background:#ffffff06; color:var(--text);
-  font-size:13px;
+  padding:13px 15px; background:#ffffff06; color:var(--text); font-size:13px;
 }
-
-.cat-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-  gap:14px;
-}
+.cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; }
 .cat-card {
   border:1px solid var(--line); border-radius:20px; padding:22px 18px;
   background:linear-gradient(155deg,#ffffff08,#ffffff02);
   color:var(--text); text-align:left; cursor:pointer;
   transition:.25s; display:flex; flex-direction:column; gap:10px;
   min-height:130px; position:relative; overflow:hidden;
-  align-items:flex-start;
 }
 .cat-card:hover { transform:translateY(-3px); border-color:var(--gold2) }
 .cat-card::after {
@@ -130,11 +95,10 @@ header {
   pointer-events:none;
 }
 .cat-card-img {
-  width:64px; height:64px; border-radius:16px;
-  object-fit:cover; border:1px solid var(--line);
-  background:var(--panel2);
+  width:64px; height:64px; border-radius:16px; object-fit:cover;
+  border:1px solid var(--line); background:var(--panel2);
 }
-.cat-card-icon { font-size:22px; color:var(--gold2); line-height:64px; height:64px }
+.cat-card-icon { font-size:22px; color:var(--gold2); height:64px; line-height:64px }
 .cat-card-title { font-size:17px; font-weight:800; letter-spacing:.02em; position:relative; z-index:1 }
 .cat-card-count { font-size:11px; color:var(--muted); position:relative; z-index:1 }
 .cat-card.about-card {
@@ -143,12 +107,7 @@ header {
   flex-direction:row; align-items:center; gap:14px;
 }
 .cat-card.about-card .cat-card-icon { font-size:20px; height:auto; line-height:1 }
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:14px;
-}
+.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
 .product {
   border:1px solid var(--line); border-radius:19px; overflow:hidden;
   background:linear-gradient(155deg,#ffffff09,#ffffff03);
@@ -164,24 +123,12 @@ header {
 .product-image img { width:100%; height:100%; object-fit:cover }
 .placeholder { font-size:38px; color:var(--gold2) }
 .product-body { padding:17px; display:flex; flex-direction:column; flex:1 }
-.product-category {
-  font-size:9px; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--gold2); font-weight:800;
-}
+.product-category { font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold2); font-weight:800 }
 .product h3 { font-size:17px; margin:9px 0 }
-.product p {
-  color:var(--muted); font-size:12px; line-height:1.7;
-  margin:0; flex:1; white-space:pre-wrap;
-}
-.product-bottom {
-  display:flex; justify-content:space-between; align-items:center;
-  gap:10px; flex-wrap:wrap; margin-top:17px;
-}
+.product p { color:var(--muted); font-size:12px; line-height:1.7; margin:0; flex:1; white-space:pre-wrap }
+.product-bottom { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:17px }
 .price { font-size:15px; font-weight:800 }
-.status {
-  font-size:9px; color:var(--muted);
-  border:1px solid var(--line); border-radius:99px; padding:6px 8px;
-}
+.status { font-size:9px; color:var(--muted); border:1px solid var(--line); border-radius:99px; padding:6px 8px }
 .empty {
   grid-column:1/-1; padding:50px 20px; text-align:center;
   border:1px dashed var(--line); border-radius:18px;
@@ -199,12 +146,7 @@ footer {
   font-size:12px; font-weight:700; margin:20px 0 10px;
 }
 .back-btn:hover { color:var(--text); border-color:var(--gold2) }
-
-.about-buttons {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-  gap:12px; margin-top:20px;
-}
+.about-buttons { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px; margin-top:20px }
 .about-buttons .btn {
   padding:22px 18px; font-size:14px; text-align:left;
   border-radius:18px; min-height:80px;
@@ -212,25 +154,18 @@ footer {
 }
 .about-buttons .btn.gold {
   background:linear-gradient(155deg,rgba(176,136,66,.22),rgba(122,92,46,.12));
-  color:var(--text);
-  border:1px solid rgba(176,136,66,.35);
+  color:var(--text); border:1px solid rgba(176,136,66,.35);
 }
 .about-buttons .btn.gold:hover { background:linear-gradient(155deg,rgba(176,136,66,.32),rgba(122,92,46,.18)) }
-
 .info-content {
   border:1px solid var(--line); border-radius:18px;
   padding:22px; background:linear-gradient(155deg,#ffffff06,#ffffff02);
   font-size:14px; line-height:1.8; color:var(--muted); white-space:pre-wrap;
 }
-.info-actions {
-  display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;
-}
-
+.info-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px }
 .bottom-nav {
-  position:fixed; z-index:15;
-  left:50%; bottom:max(12px,env(safe-area-inset-bottom));
-  transform:translateX(-50%);
-  width:min(440px,calc(100% - 24px));
+  position:fixed; z-index:15; left:50%; bottom:max(12px,env(safe-area-inset-bottom));
+  transform:translateX(-50%); width:min(440px,calc(100% - 24px));
   display:grid; grid-template-columns:1fr 1fr; gap:8px;
   padding:8px; background:var(--panel);
   border:1px solid var(--line); border-radius:19px;
@@ -239,12 +174,14 @@ footer {
 .nav-button {
   border:0; background:transparent; color:var(--muted);
   border-radius:12px; padding:13px 8px; font-size:12px; font-weight:800;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  transition:.2s;
 }
+.nav-button svg { width:18px; height:18px; flex-shrink:0 }
 .nav-button.active {
   background:linear-gradient(135deg,var(--gold2),var(--gold));
   color:#171209;
 }
-
 .overlay {
   position:fixed; inset:0; z-index:30; display:none;
   align-items:center; justify-content:center;
@@ -254,8 +191,7 @@ footer {
 .modal {
   width:min(100%,640px); max-height:90vh; overflow:auto;
   background:var(--panel); border:1px solid var(--line);
-  border-radius:22px; padding:23px;
-  box-shadow:0 24px 80px #0009;
+  border-radius:22px; padding:23px; box-shadow:0 24px 80px #0009;
 }
 .modal h2 { margin:0 0 8px; font-size:23px }
 .modal p { font-size:13px; line-height:1.7; color:var(--muted) }
@@ -269,7 +205,10 @@ footer {
 .field textarea { min-height:85px; resize:vertical }
 .field input[type=file] { padding:9px }
 .two-fields { display:grid; grid-template-columns:1fr 1fr; gap:10px }
-.subheading { font-size:13px; margin:23px 0 10px }
+.subheading {
+  font-size:13px; margin:23px 0 10px;
+  padding-bottom:8px; border-bottom:1px solid var(--line);
+}
 .small-note { color:var(--muted); font-size:10px; line-height:1.5 }
 .admin-list { display:grid; gap:8px }
 .admin-row {
@@ -282,12 +221,15 @@ footer {
   max-width:100%; max-height:180px; border-radius:12px;
   border:1px solid var(--line); margin-top:8px; display:block;
 }
-
+.cat-help {
+  font-size:11px; color:var(--muted); margin-top:-4px; margin-bottom:6px;
+  padding:8px 12px; border-left:2px solid var(--gold2);
+  background:rgba(176,136,66,.06); border-radius:6px;
+}
 #splash {
   position:fixed; inset:0; z-index:100; background:#0a0a0c;
   display:flex; align-items:center; justify-content:center;
-  text-align:center; padding:24px;
-  transition:opacity .6s,visibility .6s;
+  text-align:center; padding:24px; transition:opacity .6s,visibility .6s;
 }
 #splash.done { opacity:0; visibility:hidden; pointer-events:none }
 .splash-logo {
@@ -302,12 +244,10 @@ footer {
   animation:load 1.4s ease-in-out infinite;
 }
 @keyframes load { from{transform:translateX(-120%)} to{transform:translateX(380%)} }
-
 .gate { text-align:center; max-width:520px }
 .gate h2 { font-size:28px; margin:15px 0 8px }
 .gate .modal-actions { justify-content:center }
 .gate-note { font-size:11px !important; margin-top:16px !important }
-
 .toast {
   position:fixed; z-index:150; left:50%; bottom:100px;
   transform:translate(-50%,15px); opacity:0; pointer-events:none;
@@ -317,39 +257,12 @@ footer {
 }
 .toast.show { opacity:1; transform:translate(-50%,0) }
 
-/* ============ ТЕМЫ ============ */
-/* Основная (не меняется) */
-body[data-theme="dark"] {
-  --bg:#0a0a0c; --panel:#14141a; --panel2:#1a1a22;
-  --text:#e8e4dc; --muted:#8f8a80; --line:#2a2a32;
-  --gold:#7a5c2e; --gold2:#b08842;
-}
-/* Полночь */
-body[data-theme="midnight"] {
-  --bg:#080a14; --panel:#0f1322; --panel2:#151a2c;
-  --text:#e6e8f0; --muted:#8a8fa3; --line:#242a42;
-  --gold:#4a5a9c; --gold2:#7888c8;
-}
-/* Лес */
-body[data-theme="forest"] {
-  --bg:#0a0f0b; --panel:#121912; --panel2:#18221a;
-  --text:#e0e8dd; --muted:#889182; --line:#25301f;
-  --gold:#3f6b3a; --gold2:#6fa05f;
-}
-/* Песок (светлая) */
-body[data-theme="sand"] {
-  color-scheme:light;
-  --bg:#f0e6d4; --panel:#faf3e2; --panel2:#e8dcc0;
-  --text:#2a2014; --muted:#7a6a50; --line:#d4c5a5;
-  --gold:#8a6a30; --gold2:#b89154;
-}
-/* Роза (светлая) */
-body[data-theme="rose"] {
-  color-scheme:light;
-  --bg:#faeef0; --panel:#fff5f6; --panel2:#f3dee1;
-  --text:#2a181c; --muted:#806a70; --line:#dfc6cb;
-  --gold:#8c4a58; --gold2:#b86e7c;
-}
+/* ТЕМЫ */
+body[data-theme="dark"]     { --bg:#0a0a0c; --panel:#14141a; --panel2:#1a1a22; --text:#e8e4dc; --muted:#8f8a80; --line:#2a2a32; --gold:#7a5c2e; --gold2:#b08842; }
+body[data-theme="midnight"] { --bg:#080a14; --panel:#0f1322; --panel2:#151a2c; --text:#e6e8f0; --muted:#8a8fa3; --line:#242a42; --gold:#4a5a9c; --gold2:#7888c8; }
+body[data-theme="forest"]   { --bg:#0a0f0b; --panel:#121912; --panel2:#18221a; --text:#e0e8dd; --muted:#889182; --line:#25301f; --gold:#3f6b3a; --gold2:#6fa05f; }
+body[data-theme="sand"]     { color-scheme:light; --bg:#f0e6d4; --panel:#faf3e2; --panel2:#e8dcc0; --text:#2a2014; --muted:#7a6a50; --line:#d4c5a5; --gold:#8a6a30; --gold2:#b89154; }
+body[data-theme="rose"]     { color-scheme:light; --bg:#faeef0; --panel:#fff5f6; --panel2:#f3dee1; --text:#2a181c; --muted:#806a70; --line:#dfc6cb; --gold:#8c4a58; --gold2:#b86e7c; }
 
 @media(max-width:780px) {
   .grid { grid-template-columns:repeat(2,minmax(0,1fr)) }
@@ -375,7 +288,6 @@ body[data-theme="rose"] {
 }
 </style>
 </head>
-
 <body data-theme="dark">
 
 <!-- SPLASH -->
@@ -473,8 +385,20 @@ body[data-theme="rose"] {
 
 <!-- NAV -->
 <nav class="bottom-nav" id="bottomNav">
-  <button class="nav-button active" id="mainNav">⌂ Главная</button>
-  <button class="nav-button" id="aboutNav">☰ О нас и ссылки</button>
+  <button class="nav-button active" id="mainNav">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>
+    </svg>
+    Главная
+  </button>
+  <button class="nav-button" id="aboutNav">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 16v-4"/>
+      <circle cx="12" cy="8" r="0.6" fill="currentColor"/>
+    </svg>
+    О нас и ссылки
+  </button>
 </nav>
 
 <!-- GATE -->
@@ -511,23 +435,28 @@ body[data-theme="rose"] {
 <div class="overlay" id="adminOverlay">
   <div class="modal">
     <h2>Управление каталогом</h2>
-    <p>Создавай категории с аватарками, добавляй товары внутрь категорий. Фото — с компьютера (до 2 МБ) или ссылкой.</p>
+    <p>Создавай категории с аватарками, потом добавляй товары внутрь категорий. Фото — с компьютера (до 2 МБ) или ссылкой.</p>
 
-    <h3 class="subheading">Категории</h3>
+    <h3 class="subheading" id="catFormHeading">➕ Новая категория</h3>
+    <div class="cat-help" id="catHelp">Заполни название и нажми «Добавить категорию».</div>
+
     <div class="field">
-      <label>Выбрать категорию для изменения</label>
-      <select id="manageCategory"><option value="">— новая категория —</option></select>
+      <label>Что делаем?</label>
+      <select id="manageCategory">
+        <option value="">— создать новую категорию —</option>
+      </select>
     </div>
+
     <div class="field">
       <label>Название категории</label>
       <input id="newCategoryName" placeholder="Например, Игры">
     </div>
     <div class="field">
-      <label>Аватарка — ссылка</label>
+      <label>Аватарка — ссылка (необязательно)</label>
       <input id="newCategoryImage" type="url" placeholder="https://…">
     </div>
     <div class="field">
-      <label>Аватарка — файл</label>
+      <label>Аватарка — файл (необязательно)</label>
       <input id="newCategoryImageFile" type="file" accept="image/*">
       <div class="small-note">До 2 МБ. Сохраняется как data URL.</div>
     </div>
@@ -536,9 +465,9 @@ body[data-theme="rose"] {
       <img id="categoryPreview" class="img-preview" alt="">
     </div>
     <div class="modal-actions">
-      <button class="btn gold" id="saveCategoryBtn">Сохранить категорию</button>
+      <button class="btn gold" id="saveCategoryBtn">➕ Добавить категорию</button>
       <button class="btn" id="resetCategoryBtn">Сбросить поля</button>
-      <button class="btn danger" id="deleteCategoryBtn">Удалить категорию</button>
+      <button class="btn danger" id="deleteCategoryBtn" style="display:none">Удалить категорию</button>
     </div>
 
     <h3 class="subheading" id="formHeading">Добавить товар</h3>
@@ -547,7 +476,7 @@ body[data-theme="rose"] {
       <input id="fTitle" placeholder="Например, Premium-подписка">
     </div>
     <div class="field">
-      <label>Категория товара</label>
+      <label>Категория товара (из существующих)</label>
       <select id="fCategory"></select>
     </div>
     <div class="two-fields">
@@ -608,30 +537,29 @@ body[data-theme="rose"] {
 (() => {
   'use strict';
 
-  const CHANNEL_URL = 'https://t.me/desiresale';
-  const REVIEWS_URL = 'https://t.me/therenoreviews';
-  const CONTACT_URL = 'https://t.me/desiresceo';
+  const CHANNEL_URL   = 'https://t.me/desiresale';
+  const REVIEWS_URL   = 'https://t.me/therenoreviews';
+  const CONTACT_URL   = 'https://t.me/desiresceo';
   const AGREEMENT_URL = 'https://telegra.ph/fdf-10-15';
 
-  const THEME_KEY = 'destore-theme-v8';
+  const THEME_KEY = 'destore-theme-v9';
   const themes = ['dark','midnight','forest','sand','rose'];
   const ADMIN_IDS = [7535464331, 8404412552];
 
   const $ = id => document.getElementById(id);
   const tg = window.Telegram?.WebApp;
 
-  let categories = []; // [{name, image}]
+  let categories = [];
   let products = [];
   let activeCategory = null;
   let editingId = null;
-  let editingCategoryName = null; // для редактирования категории
+  let editingCategoryName = null;
 
-  // ---------- ADMIN ----------
   const tgUser = tg?.initDataUnsafe?.user;
   const isAdmin = !!(tgUser && ADMIN_IDS.includes(Number(tgUser.id)));
   if (isAdmin) $('adminBtn').style.display = '';
 
-  // ---------- HELPERS ----------
+  // ---------- Helpers ----------
   function esc(v='') {
     return String(v).replace(/[&<>"']/g, c => ({
       '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
@@ -645,10 +573,8 @@ body[data-theme="rose"] {
     toastTimer = setTimeout(() => $('toast').classList.remove('show'), 2600);
   }
   function price(p) {
-    const usd = p.usd !== '' && p.usd != null
-      ? '$' + Number(p.usd).toFixed(2).replace(/\.00$/, '') : '';
-    const rub = p.rub !== '' && p.rub != null
-      ? Number(p.rub).toLocaleString('ru-RU') + ' ₽' : '';
+    const usd = p.usd !== '' && p.usd != null ? '$' + Number(p.usd).toFixed(2).replace(/\.00$/, '') : '';
+    const rub = p.rub !== '' && p.rub != null ? Number(p.rub).toLocaleString('ru-RU') + ' ₽' : '';
     return [usd, rub].filter(Boolean).join(' / ') || 'По запросу';
   }
   function tgOpen(url) {
@@ -667,28 +593,27 @@ body[data-theme="rose"] {
     if (!Array.isArray(raw)) return [];
     const out = [];
     for (const item of raw) {
-      if (typeof item === 'string') {
-        out.push({ name: item, image: '' });
-      } else if (item && typeof item === 'object' && item.name) {
-        out.push({ name: String(item.name), image: item.image || '' });
-      }
+      if (typeof item === 'string') out.push({ name:item, image:'' });
+      else if (item && typeof item === 'object' && item.name) out.push({ name:String(item.name), image:item.image || '' });
     }
     return out;
   }
-  function categoryByName(name) {
-    return categories.find(c => c.name === name);
-  }
+  function categoryByName(name) { return categories.find(c => c.name === name); }
 
-  // ---------- KEY LOGO ANIMATION ----------
+  // ---------- KEY ANIMATION (reliable) ----------
   const keyLogo = $('keyLogo');
+  let keyAnimTimer = null;
   function playKeyAnim() {
     if (!keyLogo) return;
-    keyLogo.classList.remove('playing');
+    keyLogo.style.animation = 'none';
     void keyLogo.offsetWidth;
-    keyLogo.classList.add('playing');
+    keyLogo.style.animation = 'keyBounce .9s cubic-bezier(.6,.05,.4,.95)';
+    clearTimeout(keyAnimTimer);
+    keyAnimTimer = setTimeout(() => { keyLogo.style.animation = ''; }, 950);
   }
-  document.addEventListener('click', e => {
-    if (e.target.closest('button')) playKeyAnim();
+  // Слушаем клики по любым кнопкам (в фазе capture, чтобы успеть до re-render)
+  document.addEventListener('pointerdown', e => {
+    if (e.target.closest('button, .nav-button, .btn')) playKeyAnim();
   }, true);
 
   // ---------- THEME ----------
@@ -713,8 +638,7 @@ body[data-theme="rose"] {
   // ---------- SCREENS ----------
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    const el = $(id);
-    if (el) el.classList.add('active');
+    $(id)?.classList.add('active');
     document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
     if (id === 'screenAbout') $('aboutNav').classList.add('active');
     else $('mainNav').classList.add('active');
@@ -723,7 +647,7 @@ body[data-theme="rose"] {
 
   // ---------- API ----------
   async function loadCatalog() {
-    const res = await fetch('/api/catalog?t=' + Date.now(), { cache: 'no-store' });
+    const res = await fetch('/api/catalog?t=' + Date.now(), { cache:'no-store' });
     if (!res.ok) throw new Error('Не удалось загрузить каталог');
     const data = await res.json();
     categories = normalizeCategories(data.categories);
@@ -733,12 +657,8 @@ body[data-theme="rose"] {
     const initData = tg?.initData || '';
     if (!initData) throw new Error('Нет initData — открой приложение из Telegram');
     const res = await fetch('/api/catalog', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        initData,
-        catalog: { categories, products }
-      })
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ initData, catalog:{ categories, products } })
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || 'Не удалось сохранить');
@@ -748,22 +668,25 @@ body[data-theme="rose"] {
     try { await saveCatalog(); return true; }
     catch (e) { toast(e.message || 'Ошибка сохранения'); return false; }
   }
+  async function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  }
 
   // ---------- RENDER ----------
   function renderMain() {
     const query = ($('search').value || '').trim().toLowerCase();
-
     if (query) {
       $('catGrid').style.display = 'none';
-      const list = products.filter(p => {
-        const t = `${p.title} ${p.description} ${p.category}`.toLowerCase();
-        return t.includes(query);
-      });
+      const list = products.filter(p => `${p.title} ${p.description} ${p.category}`.toLowerCase().includes(query));
       $('searchResults').innerHTML = list.length ? list.map(productCard).join('')
         : '<div class="empty">Ничего не найдено.</div>';
       return;
     }
-
     $('catGrid').style.display = '';
     $('searchResults').innerHTML = '';
 
@@ -775,33 +698,27 @@ body[data-theme="rose"] {
         <button class="cat-card about-card" id="aboutCardMain">
           <span class="cat-card-icon">☰</span>
           <span class="cat-card-title">О нас и ссылки</span>
-        </button>
-      `;
+        </button>`;
       return;
     }
-
     const catCards = categories.map(cat => {
       const count = products.filter(p => p.category === cat.name).length;
       const media = cat.image
-        ? `<img class="cat-card-img" src="${esc(cat.image)}" alt="" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=&quot;cat-card-icon&quot;>◆</span>')">`
+        ? `<img class="cat-card-img" src="${esc(cat.image)}" alt="" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span class=&quot;cat-card-icon&quot;>◆</span>')">`
         : `<span class="cat-card-icon">◆</span>`;
       return `
         <button class="cat-card" data-cat="${esc(cat.name)}">
           ${media}
           <span class="cat-card-title">${esc(cat.name)}</span>
           <span class="cat-card-count">${count} ${plural(count,'товар','товара','товаров')}</span>
-        </button>
-      `;
+        </button>`;
     }).join('');
-
     $('catGrid').innerHTML = catCards + `
       <button class="cat-card about-card" id="aboutCardMain">
         <span class="cat-card-icon">☰</span>
         <span class="cat-card-title">О нас и ссылки</span>
-      </button>
-    `;
+      </button>`;
   }
-
   function productCard(p) {
     return `
       <article class="product">
@@ -817,63 +734,64 @@ body[data-theme="rose"] {
           <div class="product-bottom">
             <span class="price">${esc(price(p))}</span>
             <button class="btn ${p.status === 'buy' ? 'gold' : ''}" data-product="${esc(p.id)}">
-              ${p.status === 'out' ? 'Нет в наличии'
-                : p.status === 'ask' ? 'Уточнить'
-                : 'Подробнее ↗'}
+              ${p.status === 'out' ? 'Нет в наличии' : p.status === 'ask' ? 'Уточнить' : 'Подробнее ↗'}
             </button>
           </div>
         </div>
-      </article>
-    `;
+      </article>`;
   }
-
   function renderCategory(name) {
     $('categoryTitle').textContent = name;
     const list = products.filter(p => p.category === name);
     $('productsGrid').innerHTML = list.length ? list.map(productCard).join('')
       : '<div class="empty">В этой категории пока нет товаров.</div>';
   }
-
   function renderAdmin() {
-    // Select для товаров
     const opts = categories.map(c => `<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('');
     $('fCategory').innerHTML = opts || '<option value="">Сначала создай категорию</option>';
-
-    // Select для управления категориями
     $('manageCategory').innerHTML =
-      '<option value="">— новая категория —</option>' +
+      '<option value="">— создать новую категорию —</option>' +
       categories.map(c => `<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('');
-
-    // Если редактируем существующую — выставить её
     if (editingCategoryName && categoryByName(editingCategoryName)) {
       $('manageCategory').value = editingCategoryName;
     } else {
       editingCategoryName = null;
       $('manageCategory').value = '';
     }
+    // Кнопки и заголовок
+    updateCategoryUI();
 
-    // Список товаров
     $('adminList').innerHTML = products.length
       ? products.map(p => `
         <div class="admin-row">
-          <span>
-            <b>${esc(p.title)}</b><br>
+          <span><b>${esc(p.title)}</b><br>
             <small style="color:var(--muted)">${esc(p.category)} · ${esc(price(p))}</small>
           </span>
           <span class="row-buttons">
             <button class="btn" data-edit="${esc(p.id)}">Изменить</button>
             <button class="btn danger" data-delete="${esc(p.id)}">×</button>
           </span>
-        </div>
-      `).join('')
+        </div>`).join('')
       : '<p>Товаров пока нет.</p>';
+  }
+  function updateCategoryUI() {
+    if (editingCategoryName) {
+      $('catFormHeading').textContent = '✎ Редактирование: ' + editingCategoryName;
+      $('catHelp').textContent = 'Измени название/аватарку и нажми «Сохранить изменения».';
+      $('saveCategoryBtn').textContent = '💾 Сохранить изменения';
+      $('deleteCategoryBtn').style.display = '';
+    } else {
+      $('catFormHeading').textContent = '➕ Новая категория';
+      $('catHelp').textContent = 'Заполни название и нажми «Добавить категорию».';
+      $('saveCategoryBtn').textContent = '➕ Добавить категорию';
+      $('deleteCategoryBtn').style.display = 'none';
+    }
   }
 
   // ---------- PRODUCT FORM ----------
   function clearForm() {
     editingId = null;
-    ['fTitle','fPriceUSD','fPriceRUB','fDescription','fImageURL','fLink']
-      .forEach(id => $(id).value = '');
+    ['fTitle','fPriceUSD','fPriceRUB','fDescription','fImageURL','fLink'].forEach(id => $(id).value = '');
     $('fImageFile').value = '';
     $('fStatus').value = 'buy';
     $('formHeading').textContent = 'Добавить товар';
@@ -912,10 +830,7 @@ body[data-theme="rose"] {
     }
     $('imagePreviewField').style.display = 'none';
   }
-  function showPreview(imgEl, wrapEl, src) {
-    imgEl.src = src;
-    wrapEl.style.display = '';
-  }
+  function showPreview(imgEl, wrapEl, src) { imgEl.src = src; wrapEl.style.display = ''; }
 
   // ---------- CATEGORY FORM ----------
   function clearCategoryForm() {
@@ -925,6 +840,7 @@ body[data-theme="rose"] {
     $('newCategoryImageFile').value = '';
     $('categoryPreviewWrap').style.display = 'none';
     $('manageCategory').value = '';
+    updateCategoryUI();
   }
   function fillCategoryForm(name) {
     const cat = categoryByName(name);
@@ -933,11 +849,9 @@ body[data-theme="rose"] {
     $('newCategoryName').value = cat.name;
     $('newCategoryImage').value = cat.image && !cat.image.startsWith('data:') ? cat.image : '';
     $('newCategoryImageFile').value = '';
-    if (cat.image) {
-      showPreview($('categoryPreview'), $('categoryPreviewWrap'), cat.image);
-    } else {
-      $('categoryPreviewWrap').style.display = 'none';
-    }
+    if (cat.image) showPreview($('categoryPreview'), $('categoryPreviewWrap'), cat.image);
+    else $('categoryPreviewWrap').style.display = 'none';
+    updateCategoryUI();
   }
   function updateCategoryPreview() {
     const file = $('newCategoryImageFile').files?.[0];
@@ -955,28 +869,17 @@ body[data-theme="rose"] {
     }
     $('categoryPreviewWrap').style.display = 'none';
   }
-  async function readFileAsDataURL(file) {
-    return new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onload = () => resolve(r.result);
-      r.onerror = reject;
-      r.readAsDataURL(file);
-    });
-  }
 
   // ---------- EVENTS ----------
   $('search').addEventListener('input', renderMain);
-
   $('catGrid').addEventListener('click', e => {
-    const about = e.target.closest('#aboutCardMain');
-    if (about) { showScreen('screenAbout'); return; }
+    if (e.target.closest('#aboutCardMain')) { showScreen('screenAbout'); return; }
     const card = e.target.closest('[data-cat]');
     if (!card) return;
     activeCategory = card.dataset.cat;
     renderCategory(activeCategory);
     showScreen('screenCategory');
   });
-
   $('productsGrid').addEventListener('click', onProductClick);
   $('searchResults').addEventListener('click', onProductClick);
 
@@ -986,64 +889,37 @@ body[data-theme="rose"] {
     const p = products.find(x => x.id === btn.dataset.product);
     if (!p) return;
     if (p.status === 'out') return toast('Эта позиция временно недоступна');
-
     $('detailTitle').textContent = p.title;
     $('detailDescription').textContent = p.description || 'Подробности уточняйте в Telegram.';
     $('detailPrice').textContent = price(p);
     $('detailStatus').textContent = p.status === 'ask' ? 'Нужно уточнить' : 'Доступно';
     const img = $('detailImage');
-    if (p.image) { img.src = p.image; img.style.display = ''; }
-    else { img.style.display = 'none'; }
+    if (p.image) { img.src = p.image; img.style.display = ''; } else img.style.display = 'none';
     $('detailBuy').onclick = () => tgOpen(p.link || CONTACT_URL);
     $('productOverlay').classList.add('show');
   }
-
   $('mainNav').addEventListener('click', () => showScreen('screenMain'));
   $('aboutNav').addEventListener('click', () => showScreen('screenAbout'));
   $('backFromCategory').addEventListener('click', () => showScreen('screenMain'));
   $('backFromAbout').addEventListener('click', () => showScreen('screenMain'));
   $('backFromInfo').addEventListener('click', () => showScreen('screenAbout'));
-
   $('aboutButtons').addEventListener('click', e => {
     const btn = e.target.closest('[data-info]');
-    if (!btn) return;
-    openInfo(btn.dataset.info);
+    if (btn) openInfo(btn.dataset.info);
   });
-
   function openInfo(kind) {
     const map = {
-      about: [
-        'О нас',
-        'Destore — работаем уже около 2х лет, имеем репутацию и свежий материал, все товары которые вы можете приобрести, сдать - все можно узнать в мини-приложении. Ждем ваших покупок!',
-        []
-      ],
-      reviews: [
-        'Отзывы',
-        'Отзывы и впечатления покупателей в нашем Telegram.',
-        [{label:'Открыть отзывы', url:REVIEWS_URL}]
-      ],
-      agreement: [
-        'Пользовательское соглашение',
-        'Полный текст пользовательского соглашения доступен по кнопке ниже. Информация о товарах и ценах может обновляться. До оплаты уточняй наличие, итоговую стоимость, сроки и условия у продавца.',
-        [{label:'Открыть соглашение', url:AGREEMENT_URL}]
-      ],
-      support: [
-        'Поддержка',
-        'Если возник вопрос по товару или заказу, напиши нам в Telegram.',
-        [{label:'Написать в поддержку', url:CONTACT_URL}]
-      ],
-      contact: [
-        'Связаться',
-        'Связаться с нами можно напрямую в Telegram.',
-        [{label:'Открыть Telegram', url:CONTACT_URL}]
-      ]
+      about: ['О нас', 'Destore — работаем уже около 2х лет, имеем репутацию и свежий материал, все товары которые вы можете приобрести, сдать - все можно узнать в мини-приложении. Ждем ваших покупок!', []],
+      reviews: ['Отзывы', 'Отзывы и впечатления покупателей в нашем Telegram.', [{label:'Открыть отзывы', url:REVIEWS_URL}]],
+      agreement: ['Пользовательское соглашение', 'Полный текст пользовательского соглашения доступен по кнопке ниже. Информация о товарах и ценах может обновляться.', [{label:'Открыть соглашение', url:AGREEMENT_URL}]],
+      support: ['Поддержка', 'Если возник вопрос по товару или заказу, напиши нам в Telegram.', [{label:'Написать в поддержку', url:CONTACT_URL}]],
+      contact: ['Связаться', 'Связаться с нами можно напрямую в Telegram.', [{label:'Открыть Telegram', url:CONTACT_URL}]]
     }[kind];
     if (!map) return;
     $('infoTitle').textContent = map[0];
     $('infoText').textContent = map[1];
     $('infoActions').innerHTML = map[2].map(a =>
-      `<button class="btn gold" data-url="${esc(a.url)}">${esc(a.label)}</button>`
-    ).join('');
+      `<button class="btn gold" data-url="${esc(a.url)}">${esc(a.label)}</button>`).join('');
     showScreen('screenInfo');
   }
   $('infoActions').addEventListener('click', e => {
@@ -1051,7 +927,7 @@ body[data-theme="rose"] {
     if (l) tgOpen(l.dataset.url);
   });
 
-  // ---------- ADMIN OPEN ----------
+  // ---------- ADMIN ----------
   $('adminBtn').addEventListener('click', () => {
     if (!isAdmin) return toast('Нет доступа');
     clearForm();
@@ -1059,78 +935,65 @@ body[data-theme="rose"] {
     renderAdmin();
     $('adminOverlay').classList.add('show');
   });
-
-  // Product form
   $('clearFormBtn').addEventListener('click', () => { clearForm(); toast('Поля очищены'); });
   $('fImageURL').addEventListener('input', () => updateImagePreview());
   $('fImageFile').addEventListener('change', () => updateImagePreview());
 
-  // Category select change
   $('manageCategory').addEventListener('change', () => {
     const name = $('manageCategory').value;
-    if (!name) { clearCategoryForm(); return; }
-    fillCategoryForm(name);
+    if (!name) clearCategoryForm();
+    else fillCategoryForm(name);
   });
-
-  // Category preview
   $('newCategoryImage').addEventListener('input', updateCategoryPreview);
   $('newCategoryImageFile').addEventListener('change', updateCategoryPreview);
 
-  // Save category (add or update)
+  // SAVE / ADD категория
   $('saveCategoryBtn').addEventListener('click', async () => {
     if (!isAdmin) return;
     const name = $('newCategoryName').value.trim();
     if (!name) return toast('Введи название категории');
 
-    let image = $('newCategoryImage').value.trim();
+    let newImage = $('newCategoryImage').value.trim();
     const file = $('newCategoryImageFile').files?.[0];
     if (file) {
       if (!file.type.startsWith('image/')) return toast('Выбери файл изображения');
       if (file.size > 2 * 1024 * 1024) return toast('Аватарка больше 2 МБ');
-      try { image = await readFileAsDataURL(file); }
+      try { newImage = await readFileAsDataURL(file); }
       catch { return toast('Не удалось прочитать изображение'); }
     }
 
-    // Редактирование существующей
-    if (editingCategoryName && categoryByName(editingCategoryName)) {
+    if (editingCategoryName) {
+      // Редактирование
       const oldName = editingCategoryName;
-      // проверка на дубликат имени
       if (oldName !== name && categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
         return toast('Такая категория уже есть');
       }
-      categories = categories.map(c =>
-        c.name === oldName
-          ? { name, image: image || (image === '' ? '' : c.image) }
-          : c
-      );
+      const oldCat = categoryByName(oldName);
+      const imageToUse = newImage || oldCat?.image || '';
+
+      categories = categories.map(c => c.name === oldName ? { name, image:imageToUse } : c);
       if (oldName !== name) {
         products = products.map(p => p.category === oldName ? {...p, category:name} : p);
         if (activeCategory === oldName) activeCategory = name;
-      }
-      // Если image не задан явно — оставляем как было, а если пусто — очищаем
-      if (!image) {
-        categories = categories.map(c => c.name === name ? {...c, image:''} : c);
       }
       if (await persist()) {
         renderMain(); renderAdmin();
         editingCategoryName = name;
         $('manageCategory').value = name;
+        updateCategoryUI();
         toast('Категория обновлена');
       }
-      return;
-    }
-
-    // Добавление новой
-    if (categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
-      return toast('Такая категория уже есть');
-    }
-    categories.push({ name, image });
-    if (await persist()) {
-      renderMain(); renderAdmin();
-      $('fCategory').value = name;
-      $('manageCategory').value = name;
-      editingCategoryName = name;
-      toast('Категория добавлена');
+    } else {
+      // Добавление
+      if (categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+        return toast('Такая категория уже есть');
+      }
+      categories.push({ name, image:newImage });
+      if (await persist()) {
+        renderMain(); renderAdmin();
+        clearCategoryForm();
+        toast('Категория добавлена ✓');
+      }
     }
   });
 
@@ -1143,9 +1006,7 @@ body[data-theme="rose"] {
     if (!isAdmin) return;
     const name = editingCategoryName || $('manageCategory').value;
     if (!name) return toast('Выбери категорию');
-    if (products.some(p => p.category === name)) {
-      return toast('Сначала удали товары этой категории');
-    }
+    if (products.some(p => p.category === name)) return toast('Сначала удали товары этой категории');
     if (!confirm(`Удалить категорию «${name}»?`)) return;
     categories = categories.filter(c => c.name !== name);
     if (await persist()) {
@@ -1155,7 +1016,7 @@ body[data-theme="rose"] {
     }
   });
 
-  // Save product
+  // SAVE товар
   $('saveProduct').addEventListener('click', async () => {
     if (!isAdmin) return;
     const title = $('fTitle').value.trim();
@@ -1196,7 +1057,7 @@ body[data-theme="rose"] {
       renderAdmin();
       renderMain();
       if (activeCategory) renderCategory(activeCategory);
-      toast('Товар сохранён');
+      toast('Товар сохранён ✓');
     }
   });
 
@@ -1215,7 +1076,6 @@ body[data-theme="rose"] {
     }
   });
 
-  // Overlay close
   document.querySelectorAll('[data-close]').forEach(b => {
     b.addEventListener('click', () => $(b.dataset.close).classList.remove('show'));
   });
@@ -1225,7 +1085,7 @@ body[data-theme="rose"] {
     });
   });
 
-  // Subscription
+  // ---------- SUBSCRIPTION ----------
   async function checkSubscription() {
     const note = $('gateNote');
     const initData = tg?.initData || '';
@@ -1238,16 +1098,12 @@ body[data-theme="rose"] {
     note.textContent = 'Проверяем подписку на канал…';
     try {
       const r = await fetch('/api/check-subscription', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
+        method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({initData})
       });
       const data = await r.json();
       if (!r.ok) throw new Error(data.error || 'Не удалось проверить подписку');
-      if (data.subscribed) {
-        $('gateOverlay').classList.remove('show');
-        return true;
-      }
+      if (data.subscribed) { $('gateOverlay').classList.remove('show'); return true; }
       note.textContent = 'Подписка пока не найдена. Подпишись и проверь ещё раз.';
       return false;
     } catch (e) {
@@ -1265,23 +1121,14 @@ body[data-theme="rose"] {
   async function start() {
     applyTheme();
     $('year').textContent = new Date().getFullYear();
-
     if (tg) {
       try {
-        tg.ready();
-        tg.expand();
+        tg.ready(); tg.expand();
         const bg = getComputedStyle(document.body).getPropertyValue('--bg').trim();
-        tg.setHeaderColor(bg);
-        tg.setBackgroundColor(bg);
+        tg.setHeaderColor(bg); tg.setBackgroundColor(bg);
       } catch {}
     }
-
-    const messages = [
-      'Загружаем материалы…',
-      'Проверяем наличие товаров…',
-      'Проверяем соединение…',
-      'Почти готово…'
-    ];
+    const messages = ['Загружаем материалы…','Проверяем наличие товаров…','Проверяем соединение…','Почти готово…'];
     let i = 0;
     const interval = setInterval(() => {
       i++;
@@ -1291,7 +1138,6 @@ body[data-theme="rose"] {
 
     const splashPromise = new Promise(r => setTimeout(r, 1600));
     const catalogPromise = loadCatalog().catch(err => console.error(err));
-
     await splashPromise;
     await catalogPromise;
 
@@ -1307,7 +1153,6 @@ body[data-theme="rose"] {
       $('gateNote').textContent = 'Открой приложение из Telegram, чтобы проверить подписку.';
     }
   }
-
   start();
 })();
 </script>
