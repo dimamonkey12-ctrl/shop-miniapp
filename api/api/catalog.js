@@ -1,9 +1,17 @@
-
 const crypto = require("crypto");
 
-const ADMIN_IDS = new Set(["7535464331", "8404412552"]);
-const FILE_PATH = "data/catalog.json";
+// Путь к файлу каталога в репозитории GitHub.
+// Можно переопределить через env CATALOG_FILE_PATH.
+const FILE_PATH = process.env.CATALOG_FILE_PATH || "data/catalog.json";
 
+// ID админов — из переменной окружения ADMIN_IDS (через запятую),
+// fallback — дефолтные ID.
+function getAdminIds() {
+  const raw = process.env.ADMIN_IDS || "7535464331,8404412552";
+  return new Set(raw.split(",").map(s => s.trim()).filter(Boolean));
+}
+
+// ---------- Telegram initData verification ----------
 function verifyInitData(initData) {
   if (!initData || !process.env.BOT_TOKEN) return null;
 
@@ -13,17 +21,14 @@ function verifyInitData(initData) {
 
   const authDate = Number(params.get("auth_date"));
   const now = Math.floor(Date.now() / 1000);
-
-  if (
-    !Number.isFinite(authDate) ||
-    authDate > now + 60 ||
-    now - authDate > 86400
-  ) return null;
+  if (!Number.isFinite(authDate) || authDate > now + 60 || now - authDate > 86400) {
+    return null;
+  }
 
   const checkString = [...params.entries()]
-    .filter(([key]) => key !== "hash")
+    .filter(([k]) => k !== "hash")
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([key, value]) => `${key}=${value}`)
+    .map(([k, v]) => `${k}=${v}`)
     .join("\n");
 
   const secret = crypto
@@ -38,10 +43,10 @@ function verifyInitData(initData) {
 
   const received = Buffer.from(hash, "hex");
 
-  if (
-    calculated.length !== received.length ||
-    !crypto.timingSafeEqual(calculated, received)
-  ) return null;
+  if (calculated.length !== received.length ||
+      !crypto.timingSafeEqual(calculated, received)) {
+    return null;
+  }
 
   try {
     return JSON.parse(params.get("user") || "null");
@@ -50,13 +55,12 @@ function verifyInitData(initData) {
   }
 }
 
+// ---------- GitHub helpers ----------
 function githubConfig() {
   const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO } = process.env;
-
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
     throw new Error("Не настроены переменные GitHub в Vercel");
   }
-
   return {
     token: GITHUB_TOKEN,
     owner: GITHUB_OWNER,
@@ -67,7 +71,6 @@ function githubConfig() {
 
 async function githubRequest(path, options = {}) {
   const config = githubConfig();
-
   const response = await fetch(
     `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${path}`,
     {
@@ -84,10 +87,7 @@ async function githubRequest(path, options = {}) {
 
   const text = await response.text();
   let result = {};
-
-  try {
-    result = text ? JSON.parse(text) : {};
-  } catch {}
+  try { result = text ? JSON.parse(text) : {}; } catch {}
 
   if (!response.ok && response.status !== 404) {
     console.error("GitHub API error:", response.status, result.message);
@@ -96,27 +96,16 @@ async function githubRequest(path, options = {}) {
     throw error;
   }
 
-  return {
-    status: response.status,
-    data: result
-  };
+  return { status: response.status, data: result };
 }
 
 async function readCatalog() {
   const config = githubConfig();
-
   const query = new URLSearchParams({ ref: config.branch });
-
-  const result = await githubRequest(
-    `${FILE_PATH}?${query.toString()}`
-  );
+  const result = await githubRequest(`${FILE_PATH}?${query.toString()}`);
 
   if (result.status === 404) {
-    return {
-      categories: [],
-      products: [],
-      sha: null
-    };
+    return { categories: [], products: [], sha: null };
   }
 
   const content = Buffer.from(
@@ -124,66 +113,63 @@ async function readCatalog() {
     "base64"
   ).toString("utf8");
 
-  const catalog = JSON.parse(content);
-
-  if (
-    !catalog ||
-    !Array.isArray(catalog.categories) ||
-    !Array.isArray(catalog.products)
-  ) {
+  let catalog;
+  try {
+    catalog = JSON.parse(content);
+  } catch {
     throw new Error("Некорректный JSON каталога");
   }
 
-  return {
-    ...catalog,
-    sha: result.data.sha
-  };
+  if (!catalog ||
+      !Array.isArray(catalog.categories) ||
+      !Array.isArray(catalog.products)) {
+    throw new Error("Некорректная структура каталога");
+  }
+
+  return { ...catalog, sha: result.data.sha };
 }
 
+// ---------- HANDLER ----------
 module.exports = async function handler(req, res) {
-  res.setHeader("Cache-Control", "no-store");
+  // Жёсткие заголовки против кэша — чтобы клиенты всегда получали свежие данные
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+
+  if (req.method === "OPTIONS") {
+    res.setHeader("Allow", "GET, POST, OPTIONS");
+    return res.status(204).end();
+  }
 
   if (req.method === "GET") {
     try {
       const catalog = await readCatalog();
       delete catalog.sha;
-
       return res.status(200).json(catalog);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        error: "Не удалось загрузить каталог"
-      });
+      console.error("GET /catalog error:", error);
+      return res.status(500).json({ error: "Не удалось загрузить каталог" });
     }
   }
 
   if (req.method !== "POST") {
-    res.setHeader("Allow", "GET, POST");
-    return res.status(405).json({
-      error: "Метод не поддерживается"
-    });
+    res.setHeader("Allow", "GET, POST, OPTIONS");
+    return res.status(405).json({ error: "Метод не поддерживается" });
   }
 
   try {
     const body = req.body || {};
     const user = verifyInitData(body.initData);
 
-    if (!user || !ADMIN_IDS.has(String(user.id))) {
-      return res.status(403).json({
-        error: "Нет доступа к сохранению каталога"
-      });
+    if (!user || !getAdminIds().has(String(user.id))) {
+      return res.status(403).json({ error: "Нет доступа к сохранению каталога" });
     }
 
     const catalog = body.catalog;
-
-    if (
-      !catalog ||
-      !Array.isArray(catalog.categories) ||
-      !Array.isArray(catalog.products)
-    ) {
-      return res.status(400).json({
-        error: "Некорректный формат каталога"
-      });
+    if (!catalog ||
+        !Array.isArray(catalog.categories) ||
+        !Array.isArray(catalog.products)) {
+      return res.status(400).json({ error: "Некорректный формат каталога" });
     }
 
     const json = JSON.stringify({
@@ -201,11 +187,10 @@ module.exports = async function handler(req, res) {
     const config = githubConfig();
 
     const payload = {
-      message: "Update Destore catalog",
+      message: `Update catalog (${user.id})`,
       content: Buffer.from(json, "utf8").toString("base64"),
       branch: config.branch
     };
-
     if (current.sha) payload.sha = current.sha;
 
     const result = await githubRequest(FILE_PATH, {
@@ -214,26 +199,19 @@ module.exports = async function handler(req, res) {
     });
 
     if (result.status !== 200 && result.status !== 201) {
-      return res.status(502).json({
-        error: "GitHub не подтвердил сохранение"
-      });
+      return res.status(502).json({ error: "GitHub не подтвердил сохранение" });
     }
 
-    return res.status(200).json({
-      ok: true,
-      message: "Каталог сохранён"
-    });
+    return res.status(200).json({ ok: true, message: "Каталог сохранён" });
   } catch (error) {
-    console.error(error);
+    console.error("POST /catalog error:", error);
 
     if (error.status === 409 || error.status === 422) {
       return res.status(409).json({
-        error: "Каталог изменился одновременно. Обнови его и попробуй снова."
+        error: "Каталог изменился одновременно. Обнови страницу и повтори."
       });
     }
 
-    return res.status(500).json({
-      error: "Ошибка сохранения каталога"
-    });
+    return res.status(500).json({ error: "Ошибка сохранения каталога" });
   }
 };
